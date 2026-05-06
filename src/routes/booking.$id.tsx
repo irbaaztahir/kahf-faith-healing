@@ -25,7 +25,7 @@ export const Route = createFileRoute("/booking/$id")({
 });
 
 function BookingPage() {
-  const { therapist } = Route.useLoaderData();
+  const { therapist } = Route.useLoaderData() as { therapist: typeof therapists[number] };
   const { kind } = Route.useSearch();
   const [step, setStep] = useState(0);
   const [slot, setSlot] = useState<string | null>(null);
