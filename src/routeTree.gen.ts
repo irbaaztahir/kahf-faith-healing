@@ -9,38 +9,221 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TherapistPortalRouteImport } from './routes/therapist-portal'
+import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as SessionRouteImport } from './routes/session'
+import { Route as QuizRouteImport } from './routes/quiz'
+import { Route as JournalRouteImport } from './routes/journal'
+import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as TherapistsIndexRouteImport } from './routes/therapists.index'
+import { Route as TherapistsIdRouteImport } from './routes/therapists.$id'
+import { Route as BookingIdRouteImport } from './routes/booking.$id'
 
+const TherapistPortalRoute = TherapistPortalRouteImport.update({
+  id: '/therapist-portal',
+  path: '/therapist-portal',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SessionRoute = SessionRouteImport.update({
+  id: '/session',
+  path: '/session',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const QuizRoute = QuizRouteImport.update({
+  id: '/quiz',
+  path: '/quiz',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JournalRoute = JournalRouteImport.update({
+  id: '/journal',
+  path: '/journal',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TherapistsIndexRoute = TherapistsIndexRouteImport.update({
+  id: '/therapists/',
+  path: '/therapists/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TherapistsIdRoute = TherapistsIdRouteImport.update({
+  id: '/therapists/$id',
+  path: '/therapists/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BookingIdRoute = BookingIdRouteImport.update({
+  id: '/booking/$id',
+  path: '/booking/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/dashboard': typeof DashboardRoute
+  '/journal': typeof JournalRoute
+  '/quiz': typeof QuizRoute
+  '/session': typeof SessionRoute
+  '/settings': typeof SettingsRoute
+  '/therapist-portal': typeof TherapistPortalRoute
+  '/booking/$id': typeof BookingIdRoute
+  '/therapists/$id': typeof TherapistsIdRoute
+  '/therapists/': typeof TherapistsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/dashboard': typeof DashboardRoute
+  '/journal': typeof JournalRoute
+  '/quiz': typeof QuizRoute
+  '/session': typeof SessionRoute
+  '/settings': typeof SettingsRoute
+  '/therapist-portal': typeof TherapistPortalRoute
+  '/booking/$id': typeof BookingIdRoute
+  '/therapists/$id': typeof TherapistsIdRoute
+  '/therapists': typeof TherapistsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/dashboard': typeof DashboardRoute
+  '/journal': typeof JournalRoute
+  '/quiz': typeof QuizRoute
+  '/session': typeof SessionRoute
+  '/settings': typeof SettingsRoute
+  '/therapist-portal': typeof TherapistPortalRoute
+  '/booking/$id': typeof BookingIdRoute
+  '/therapists/$id': typeof TherapistsIdRoute
+  '/therapists/': typeof TherapistsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/dashboard'
+    | '/journal'
+    | '/quiz'
+    | '/session'
+    | '/settings'
+    | '/therapist-portal'
+    | '/booking/$id'
+    | '/therapists/$id'
+    | '/therapists/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/auth'
+    | '/dashboard'
+    | '/journal'
+    | '/quiz'
+    | '/session'
+    | '/settings'
+    | '/therapist-portal'
+    | '/booking/$id'
+    | '/therapists/$id'
+    | '/therapists'
+  id:
+    | '__root__'
+    | '/'
+    | '/auth'
+    | '/dashboard'
+    | '/journal'
+    | '/quiz'
+    | '/session'
+    | '/settings'
+    | '/therapist-portal'
+    | '/booking/$id'
+    | '/therapists/$id'
+    | '/therapists/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthRoute: typeof AuthRoute
+  DashboardRoute: typeof DashboardRoute
+  JournalRoute: typeof JournalRoute
+  QuizRoute: typeof QuizRoute
+  SessionRoute: typeof SessionRoute
+  SettingsRoute: typeof SettingsRoute
+  TherapistPortalRoute: typeof TherapistPortalRoute
+  BookingIdRoute: typeof BookingIdRoute
+  TherapistsIdRoute: typeof TherapistsIdRoute
+  TherapistsIndexRoute: typeof TherapistsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/therapist-portal': {
+      id: '/therapist-portal'
+      path: '/therapist-portal'
+      fullPath: '/therapist-portal'
+      preLoaderRoute: typeof TherapistPortalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/session': {
+      id: '/session'
+      path: '/session'
+      fullPath: '/session'
+      preLoaderRoute: typeof SessionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/quiz': {
+      id: '/quiz'
+      path: '/quiz'
+      fullPath: '/quiz'
+      preLoaderRoute: typeof QuizRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/journal': {
+      id: '/journal'
+      path: '/journal'
+      fullPath: '/journal'
+      preLoaderRoute: typeof JournalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,21 +231,43 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/therapists/': {
+      id: '/therapists/'
+      path: '/therapists'
+      fullPath: '/therapists/'
+      preLoaderRoute: typeof TherapistsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/therapists/$id': {
+      id: '/therapists/$id'
+      path: '/therapists/$id'
+      fullPath: '/therapists/$id'
+      preLoaderRoute: typeof TherapistsIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/booking/$id': {
+      id: '/booking/$id'
+      path: '/booking/$id'
+      fullPath: '/booking/$id'
+      preLoaderRoute: typeof BookingIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthRoute: AuthRoute,
+  DashboardRoute: DashboardRoute,
+  JournalRoute: JournalRoute,
+  QuizRoute: QuizRoute,
+  SessionRoute: SessionRoute,
+  SettingsRoute: SettingsRoute,
+  TherapistPortalRoute: TherapistPortalRoute,
+  BookingIdRoute: BookingIdRoute,
+  TherapistsIdRoute: TherapistsIdRoute,
+  TherapistsIndexRoute: TherapistsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-  }
-}
