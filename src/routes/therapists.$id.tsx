@@ -32,7 +32,7 @@ export const Route = createFileRoute("/therapists/$id")({
 });
 
 function ProfilePage() {
-  const { therapist: t } = Route.useLoaderData();
+  const { therapist: t } = Route.useLoaderData() as { therapist: typeof therapists[number] };
   const formatIcons: Record<string, typeof Video> = { Video, Chat: MessageCircle, Voice: Mic };
 
   return (
