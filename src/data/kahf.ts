@@ -31,7 +31,7 @@ export const therapists: Therapist[] = [
     rating: 4.9,
     reviews: 142,
     nextSlot: "Tomorrow, 10:00",
-    price: 95,
+    price: 85,
     gender: "female",
     bio: "I work gently with women navigating anxiety, identity, and the in-between spaces of faith and modern life.",
     approach: "Integrative, trauma-informed CBT with Islamic psychology grounding.",
