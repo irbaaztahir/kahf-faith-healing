@@ -13,12 +13,15 @@ import { Route as TherapistPortalRouteImport } from './routes/therapist-portal'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as SessionRouteImport } from './routes/session'
 import { Route as QuizRouteImport } from './routes/quiz'
+import { Route as PartnersRouteImport } from './routes/partners'
 import { Route as JournalRouteImport } from './routes/journal'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as TherapistsIndexRouteImport } from './routes/therapists.index'
 import { Route as TherapistsIdRouteImport } from './routes/therapists.$id'
+import { Route as PartnersCorporateRouteImport } from './routes/partners.corporate'
+import { Route as PartnersClinicalRouteImport } from './routes/partners.clinical'
 import { Route as BookingIdRouteImport } from './routes/booking.$id'
 import { Route as ApiCompanionChatRouteImport } from './routes/api/companion-chat'
 
@@ -40,6 +43,11 @@ const SessionRoute = SessionRouteImport.update({
 const QuizRoute = QuizRouteImport.update({
   id: '/quiz',
   path: '/quiz',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PartnersRoute = PartnersRouteImport.update({
+  id: '/partners',
+  path: '/partners',
   getParentRoute: () => rootRouteImport,
 } as any)
 const JournalRoute = JournalRouteImport.update({
@@ -72,6 +80,16 @@ const TherapistsIdRoute = TherapistsIdRouteImport.update({
   path: '/therapists/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PartnersCorporateRoute = PartnersCorporateRouteImport.update({
+  id: '/corporate',
+  path: '/corporate',
+  getParentRoute: () => PartnersRoute,
+} as any)
+const PartnersClinicalRoute = PartnersClinicalRouteImport.update({
+  id: '/clinical',
+  path: '/clinical',
+  getParentRoute: () => PartnersRoute,
+} as any)
 const BookingIdRoute = BookingIdRouteImport.update({
   id: '/booking/$id',
   path: '/booking/$id',
@@ -88,12 +106,15 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/dashboard': typeof DashboardRoute
   '/journal': typeof JournalRoute
+  '/partners': typeof PartnersRouteWithChildren
   '/quiz': typeof QuizRoute
   '/session': typeof SessionRoute
   '/settings': typeof SettingsRoute
   '/therapist-portal': typeof TherapistPortalRoute
   '/api/companion-chat': typeof ApiCompanionChatRoute
   '/booking/$id': typeof BookingIdRoute
+  '/partners/clinical': typeof PartnersClinicalRoute
+  '/partners/corporate': typeof PartnersCorporateRoute
   '/therapists/$id': typeof TherapistsIdRoute
   '/therapists/': typeof TherapistsIndexRoute
 }
@@ -102,12 +123,15 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/dashboard': typeof DashboardRoute
   '/journal': typeof JournalRoute
+  '/partners': typeof PartnersRouteWithChildren
   '/quiz': typeof QuizRoute
   '/session': typeof SessionRoute
   '/settings': typeof SettingsRoute
   '/therapist-portal': typeof TherapistPortalRoute
   '/api/companion-chat': typeof ApiCompanionChatRoute
   '/booking/$id': typeof BookingIdRoute
+  '/partners/clinical': typeof PartnersClinicalRoute
+  '/partners/corporate': typeof PartnersCorporateRoute
   '/therapists/$id': typeof TherapistsIdRoute
   '/therapists': typeof TherapistsIndexRoute
 }
@@ -117,12 +141,15 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/dashboard': typeof DashboardRoute
   '/journal': typeof JournalRoute
+  '/partners': typeof PartnersRouteWithChildren
   '/quiz': typeof QuizRoute
   '/session': typeof SessionRoute
   '/settings': typeof SettingsRoute
   '/therapist-portal': typeof TherapistPortalRoute
   '/api/companion-chat': typeof ApiCompanionChatRoute
   '/booking/$id': typeof BookingIdRoute
+  '/partners/clinical': typeof PartnersClinicalRoute
+  '/partners/corporate': typeof PartnersCorporateRoute
   '/therapists/$id': typeof TherapistsIdRoute
   '/therapists/': typeof TherapistsIndexRoute
 }
@@ -133,12 +160,15 @@ export interface FileRouteTypes {
     | '/auth'
     | '/dashboard'
     | '/journal'
+    | '/partners'
     | '/quiz'
     | '/session'
     | '/settings'
     | '/therapist-portal'
     | '/api/companion-chat'
     | '/booking/$id'
+    | '/partners/clinical'
+    | '/partners/corporate'
     | '/therapists/$id'
     | '/therapists/'
   fileRoutesByTo: FileRoutesByTo
@@ -147,12 +177,15 @@ export interface FileRouteTypes {
     | '/auth'
     | '/dashboard'
     | '/journal'
+    | '/partners'
     | '/quiz'
     | '/session'
     | '/settings'
     | '/therapist-portal'
     | '/api/companion-chat'
     | '/booking/$id'
+    | '/partners/clinical'
+    | '/partners/corporate'
     | '/therapists/$id'
     | '/therapists'
   id:
@@ -161,12 +194,15 @@ export interface FileRouteTypes {
     | '/auth'
     | '/dashboard'
     | '/journal'
+    | '/partners'
     | '/quiz'
     | '/session'
     | '/settings'
     | '/therapist-portal'
     | '/api/companion-chat'
     | '/booking/$id'
+    | '/partners/clinical'
+    | '/partners/corporate'
     | '/therapists/$id'
     | '/therapists/'
   fileRoutesById: FileRoutesById
@@ -176,6 +212,7 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   DashboardRoute: typeof DashboardRoute
   JournalRoute: typeof JournalRoute
+  PartnersRoute: typeof PartnersRouteWithChildren
   QuizRoute: typeof QuizRoute
   SessionRoute: typeof SessionRoute
   SettingsRoute: typeof SettingsRoute
@@ -214,6 +251,13 @@ declare module '@tanstack/react-router' {
       path: '/quiz'
       fullPath: '/quiz'
       preLoaderRoute: typeof QuizRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/partners': {
+      id: '/partners'
+      path: '/partners'
+      fullPath: '/partners'
+      preLoaderRoute: typeof PartnersRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/journal': {
@@ -258,6 +302,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TherapistsIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/partners/corporate': {
+      id: '/partners/corporate'
+      path: '/corporate'
+      fullPath: '/partners/corporate'
+      preLoaderRoute: typeof PartnersCorporateRouteImport
+      parentRoute: typeof PartnersRoute
+    }
+    '/partners/clinical': {
+      id: '/partners/clinical'
+      path: '/clinical'
+      fullPath: '/partners/clinical'
+      preLoaderRoute: typeof PartnersClinicalRouteImport
+      parentRoute: typeof PartnersRoute
+    }
     '/booking/$id': {
       id: '/booking/$id'
       path: '/booking/$id'
@@ -275,11 +333,26 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface PartnersRouteChildren {
+  PartnersClinicalRoute: typeof PartnersClinicalRoute
+  PartnersCorporateRoute: typeof PartnersCorporateRoute
+}
+
+const PartnersRouteChildren: PartnersRouteChildren = {
+  PartnersClinicalRoute: PartnersClinicalRoute,
+  PartnersCorporateRoute: PartnersCorporateRoute,
+}
+
+const PartnersRouteWithChildren = PartnersRoute._addFileChildren(
+  PartnersRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRoute: AuthRoute,
   DashboardRoute: DashboardRoute,
   JournalRoute: JournalRoute,
+  PartnersRoute: PartnersRouteWithChildren,
   QuizRoute: QuizRoute,
   SessionRoute: SessionRoute,
   SettingsRoute: SettingsRoute,
