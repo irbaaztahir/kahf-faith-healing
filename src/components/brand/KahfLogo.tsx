@@ -14,9 +14,9 @@ export function KahfLogo({ className = "h-7 w-7" }: { className?: string }) {
 
 export function KahfWordmark({ className = "" }: { className?: string }) {
   return (
-    <Link to="/" className={`inline-flex items-center gap-2 text-foreground ${className}`}>
-      <KahfLogo className="h-7 w-7 text-dusk" />
-      <span className="font-display text-2xl tracking-[0.2em]">KAHF</span>
+    <Link to="/" className={`inline-flex items-center gap-2 text-dusk ${className}`}>
+      <KahfLogo className="h-7 w-7" />
+      <span className="font-display text-2xl font-bold tracking-[0.18em]">KAHF</span>
     </Link>
   );
 }
