@@ -20,6 +20,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as TherapistsIndexRouteImport } from './routes/therapists.index'
 import { Route as TherapistsIdRouteImport } from './routes/therapists.$id'
 import { Route as BookingIdRouteImport } from './routes/booking.$id'
+import { Route as ApiCompanionChatRouteImport } from './routes/api/companion-chat'
 
 const TherapistPortalRoute = TherapistPortalRouteImport.update({
   id: '/therapist-portal',
@@ -76,6 +77,11 @@ const BookingIdRoute = BookingIdRouteImport.update({
   path: '/booking/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiCompanionChatRoute = ApiCompanionChatRouteImport.update({
+  id: '/api/companion-chat',
+  path: '/api/companion-chat',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -86,6 +92,7 @@ export interface FileRoutesByFullPath {
   '/session': typeof SessionRoute
   '/settings': typeof SettingsRoute
   '/therapist-portal': typeof TherapistPortalRoute
+  '/api/companion-chat': typeof ApiCompanionChatRoute
   '/booking/$id': typeof BookingIdRoute
   '/therapists/$id': typeof TherapistsIdRoute
   '/therapists/': typeof TherapistsIndexRoute
@@ -99,6 +106,7 @@ export interface FileRoutesByTo {
   '/session': typeof SessionRoute
   '/settings': typeof SettingsRoute
   '/therapist-portal': typeof TherapistPortalRoute
+  '/api/companion-chat': typeof ApiCompanionChatRoute
   '/booking/$id': typeof BookingIdRoute
   '/therapists/$id': typeof TherapistsIdRoute
   '/therapists': typeof TherapistsIndexRoute
@@ -113,6 +121,7 @@ export interface FileRoutesById {
   '/session': typeof SessionRoute
   '/settings': typeof SettingsRoute
   '/therapist-portal': typeof TherapistPortalRoute
+  '/api/companion-chat': typeof ApiCompanionChatRoute
   '/booking/$id': typeof BookingIdRoute
   '/therapists/$id': typeof TherapistsIdRoute
   '/therapists/': typeof TherapistsIndexRoute
@@ -128,6 +137,7 @@ export interface FileRouteTypes {
     | '/session'
     | '/settings'
     | '/therapist-portal'
+    | '/api/companion-chat'
     | '/booking/$id'
     | '/therapists/$id'
     | '/therapists/'
@@ -141,6 +151,7 @@ export interface FileRouteTypes {
     | '/session'
     | '/settings'
     | '/therapist-portal'
+    | '/api/companion-chat'
     | '/booking/$id'
     | '/therapists/$id'
     | '/therapists'
@@ -154,6 +165,7 @@ export interface FileRouteTypes {
     | '/session'
     | '/settings'
     | '/therapist-portal'
+    | '/api/companion-chat'
     | '/booking/$id'
     | '/therapists/$id'
     | '/therapists/'
@@ -168,6 +180,7 @@ export interface RootRouteChildren {
   SessionRoute: typeof SessionRoute
   SettingsRoute: typeof SettingsRoute
   TherapistPortalRoute: typeof TherapistPortalRoute
+  ApiCompanionChatRoute: typeof ApiCompanionChatRoute
   BookingIdRoute: typeof BookingIdRoute
   TherapistsIdRoute: typeof TherapistsIdRoute
   TherapistsIndexRoute: typeof TherapistsIndexRoute
@@ -252,6 +265,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BookingIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/companion-chat': {
+      id: '/api/companion-chat'
+      path: '/api/companion-chat'
+      fullPath: '/api/companion-chat'
+      preLoaderRoute: typeof ApiCompanionChatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -264,6 +284,7 @@ const rootRouteChildren: RootRouteChildren = {
   SessionRoute: SessionRoute,
   SettingsRoute: SettingsRoute,
   TherapistPortalRoute: TherapistPortalRoute,
+  ApiCompanionChatRoute: ApiCompanionChatRoute,
   BookingIdRoute: BookingIdRoute,
   TherapistsIdRoute: TherapistsIdRoute,
   TherapistsIndexRoute: TherapistsIndexRoute,
@@ -271,3 +292,12 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
+}
