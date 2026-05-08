@@ -3,6 +3,7 @@ import { SiteHeader } from "@/components/layout/SiteHeader";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { useState } from "react";
 import { Search, BadgeCheck } from "lucide-react";
+import { EmptyState } from "@/components/layout/EmptyState";
 
 export const Route = createFileRoute("/library/")({
   head: () => ({
@@ -72,6 +73,14 @@ function Library() {
 
       {/* Grid */}
       <section className="mx-auto max-w-7xl px-6 py-12">
+        {items.length === 0 ? (
+          <EmptyState
+            title="Nothing matches just yet"
+            description="Try a different topic or clear your search to explore everything in the library."
+            actionLabel="Clear filters"
+            onAction={() => { setCat("All"); setQ(""); }}
+          />
+        ) : (
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 kahf-stagger">
           {items.map((i) => (
             <Link key={i.slug} to="/library/$slug" params={{ slug: i.slug }} className="kahf-card group overflow-hidden rounded-[16px] border border-border bg-warm">
@@ -91,6 +100,7 @@ function Library() {
             </Link>
           ))}
         </div>
+        )}
       </section>
       <SiteFooter />
     </div>
