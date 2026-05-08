@@ -11,9 +11,9 @@ import heroPattern from "@/assets/hero-pattern.jpg";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "KAHF — Healing rooted in faith" },
+      { title: "KAHF — Free Trial" },
       { name: "description", content: "KAHF connects Muslims worldwide with verified Islamic psychologists and therapists. Faith-sensitive, clinically excellent care." },
-      { property: "og:title", content: "KAHF — Healing rooted in faith" },
+      { property: "og:title", content: "KAHF — Free Trial" },
       { property: "og:description", content: "Verified Muslim therapists. End-to-end encrypted. Faith-sensitive care." },
     ],
   }),
@@ -49,9 +49,8 @@ function Hero() {
         <Badge className="mb-8 rounded-full border border-border/60 bg-card/70 px-4 py-1.5 text-[11px] font-normal uppercase tracking-[0.25em] text-muted-foreground hover:bg-card/70">
           A quiet space for Muslim hearts
         </Badge>
-        <h1 className="font-display text-5xl leading-[1.05] text-foreground sm:text-6xl md:text-7xl lg:text-8xl">
-          Healing rooted <br />
-          <span className="italic text-dusk">in faith.</span>
+        <h1 className="font-display leading-[1.05] text-foreground sm:text-6xl md:text-7xl lg:text-8xl font-mono text-7xl">
+          Free Trial
         </h1>
         <p className="mx-auto mt-8 max-w-xl text-lg leading-relaxed text-muted-foreground">
           KAHF connects you with verified Muslim therapists worldwide — clinically excellent care that honours your values, your story, your deen.
