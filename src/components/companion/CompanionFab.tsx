@@ -1,17 +1,17 @@
 import { useEffect, useRef, useState } from "react";
-import { MessageCircle, X, Send, AlertTriangle, Phone, ArrowRight } from "lucide-react";
+import { X, Send, AlertTriangle, Phone, ArrowRight, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 type Role = "user" | "assistant" | "system";
 interface Msg { role: Role; content: string; }
 
 const SUGGESTIONS = [
-  "Help me journal right now",
+  "Help me journal",
   "I'm feeling anxious",
   "I need a dua",
   "Just talk to me",
+  "Prepare for my session",
   "Remind me why I started",
-  "Help me prepare for my session",
 ];
 
 const CRISIS_RX = /(want to die|kill myself|end it all|self[\s-]?harm|hurt myself|no reason to live|suicidal)/i;
@@ -26,16 +26,39 @@ If a user expresses suicidal ideation, intent to self-harm, or acute mental heal
 
 Language: English by default. If the user writes in Arabic, respond in Arabic. If in Urdu, respond in Urdu.`;
 
+// Custom hexagonal geometric icon (Islamic-inspired, abstract)
+function HexIcon({ size = 18, className = "" }: { size?: number; className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" width={size} height={size} className={className} fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round">
+      <path d="M12 2 L21 7 V17 L12 22 L3 17 V7 Z" />
+      <path d="M12 7 L17 9.5 V14.5 L12 17 L7 14.5 V9.5 Z" />
+      <path d="M12 7 V17 M3 7 L21 17 M21 7 L3 17" opacity="0.4" />
+    </svg>
+  );
+}
+
 export function CompanionFab() {
   const [open, setOpen] = useState(false);
   return (
     <>
       <button
-        aria-label="Open Kahf Companion"
-        onClick={() => setOpen(true)}
-        className="kahf-btn fixed bottom-6 right-6 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-lavender text-warm shadow-elevated hover:bg-lavender/90"
+        aria-label={open ? "Close Kahf Companion" : "Open Kahf Companion"}
+        onClick={() => setOpen((o) => !o)}
+        className={`kahf-btn fixed z-40 inline-flex items-center gap-2.5 rounded-full border px-5 py-3 shadow-elevated
+          bottom-6 left-1/2 -translate-x-1/2 kahf-fab-in-mobile
+          md:bottom-8 md:right-10 md:left-auto md:translate-x-0 md:kahf-fab-in
+          ${open
+            ? "border-lavender/60 bg-lavender text-dusk hover:bg-lavender/90"
+            : "border-lavender/30 bg-dusk text-[#e8dfc8] hover:bg-[#4a3f68] hover:-translate-y-0.5 md:hover:translate-x-0"}`}
+        style={{ boxShadow: "0 8px 32px rgba(58,47,82,0.35), 0 2px 8px rgba(58,47,82,0.2)" }}
       >
-        <MessageCircle className="h-6 w-6" />
+        <HexIcon size={18} className={open ? "text-dusk" : "text-lavender"} />
+        <span className="font-sans text-[13px] font-medium tracking-tight">
+          {open ? "Close companion" : "Kahf Companion"}
+        </span>
+        {!open && (
+          <span className="ml-0.5 inline-block h-2 w-2 rounded-full bg-sage kahf-pulse-dot" aria-hidden />
+        )}
       </button>
       {open && <CompanionPanel onClose={() => setOpen(false)} />}
     </>
@@ -46,15 +69,10 @@ function CompanionPanel({ onClose }: { onClose: () => void }) {
   const [messages, setMessages] = useState<Msg[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
-  const [showDisclaimer, setShowDisclaimer] = useState(true);
   const [crisis, setCrisis] = useState(false);
   const [breathing, setBreathing] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const t = setTimeout(() => setShowDisclaimer(false), 5000);
-    return () => clearTimeout(t);
-  }, []);
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
   }, [messages, loading]);
@@ -62,9 +80,6 @@ function CompanionPanel({ onClose }: { onClose: () => void }) {
   const send = async (text: string) => {
     if (!text.trim() || loading) return;
     if (CRISIS_RX.test(text)) { setCrisis(true); return; }
-    if (/breath|anxious|anxiety/i.test(text) && messages.length === 0) {
-      // friendly nudge to breathing
-    }
     const next: Msg[] = [...messages, { role: "user", content: text }];
     setMessages(next);
     setInput("");
@@ -119,38 +134,51 @@ function CompanionPanel({ onClose }: { onClose: () => void }) {
 
   return (
     <div className="fixed inset-0 z-50">
-      <div className="absolute inset-0 bg-dusk/30 backdrop-blur-sm" onClick={onClose} />
-      <div className="kahf-drawer-right absolute right-0 top-0 flex h-full w-full max-w-[480px] flex-col bg-mist shadow-elevated md:rounded-l-[16px]">
-        <header className="flex items-center justify-between border-b border-border bg-warm px-5 py-4">
+      <div className="kahf-modal-overlay absolute inset-0 bg-dusk/30 backdrop-blur-sm" onClick={onClose} />
+
+      {/* Desktop right panel / Mobile bottom sheet */}
+      <div
+        className="absolute bg-mist shadow-elevated flex flex-col
+          inset-x-0 bottom-0 h-[88vh] rounded-t-[24px] kahf-sheet-up
+          md:inset-auto md:right-6 md:bottom-24 md:top-10 md:w-[420px] md:rounded-[20px] md:kahf-drawer-right"
+        style={{ borderTop: "3px solid var(--lavender)" }}
+      >
+        {/* Mobile drag handle */}
+        <div className="mx-auto mt-2 mb-1 h-1 w-10 rounded-full bg-cool/60 md:hidden" aria-hidden />
+
+        {/* Header */}
+        <header className="flex items-center justify-between bg-dusk px-5 py-3 md:rounded-t-[20px]" style={{ minHeight: 64 }}>
           <div className="flex items-center gap-3">
-            <div className="flex h-9 w-9 items-center justify-center rounded-[10px] bg-lavender/40">
-              <svg viewBox="0 0 24 24" className="h-5 w-5 text-dusk" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M12 2 L22 7 V17 L12 22 L2 17 V7 Z" /></svg>
-            </div>
+            <HexIcon size={20} className="text-lavender" />
             <div>
-              <h2 className="font-display text-xl text-dusk">Kahf Companion</h2>
-              <p className="text-[11px] text-cool">A reflection space, not a therapist</p>
+              <div className="flex items-center gap-2">
+                <h2 className="font-display text-[15px] text-[#e8dfc8]">Kahf Companion</h2>
+                <span className={`inline-block h-1.5 w-1.5 rounded-full ${loading ? "bg-lavender animate-spin" : "bg-sage kahf-pulse-dot"}`} aria-hidden />
+              </div>
+              <p className="text-[11px] font-light leading-tight" style={{ color: "rgba(232,223,200,0.6)" }}>
+                A private space to reflect, breathe, and think
+              </p>
             </div>
           </div>
-          <button aria-label="Close" onClick={onClose} className="kahf-btn rounded-[10px] p-2 text-cool hover:bg-mist">
+          <button
+            aria-label="Close"
+            onClick={onClose}
+            className="kahf-btn flex h-9 w-9 items-center justify-center rounded-[8px] text-[#e8dfc8] hover:bg-white/10"
+          >
             <X className="h-5 w-5" />
           </button>
         </header>
 
-        {showDisclaimer && (
-          <div className="bg-lavender/30 px-5 py-3 text-xs leading-relaxed text-dusk">
-            Kahf Companion is a reflection tool, not a therapist. It helps you journal, breathe, and think — not diagnose. In a crisis, please contact your therapist or emergency services.
-          </div>
-        )}
-
-        <div ref={scrollRef} className="flex-1 overflow-y-auto px-5 py-6">
-          {messages.length === 0 ? (
-            <div className="flex flex-col items-center pt-6 text-center">
-              <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-[16px] bg-lavender/40">
-                <svg viewBox="0 0 24 24" className="h-8 w-8 text-dusk" fill="none" stroke="currentColor" strokeWidth="1.4"><path d="M12 2 L22 7 V17 L12 22 L2 17 V7 Z" /></svg>
-              </div>
-              <h3 className="font-display text-2xl text-dusk">Hello there.</h3>
-              <p className="mt-2 max-w-xs text-sm text-cool">I'm here whenever you need a moment to think, breathe, or reflect.</p>
-              <div className="mt-6 grid w-full grid-cols-1 gap-2 sm:grid-cols-2">
+        {/* Body */}
+        <div ref={scrollRef} className="flex-1 overflow-y-auto bg-mist px-5 py-6">
+          {messages.length === 0 && !breathing ? (
+            <div className="flex flex-col items-center pt-4 text-center">
+              <div className="mb-4 text-lavender"><HexIcon size={48} /></div>
+              <h3 className="font-display text-[18px] text-dusk">Welcome to your sanctuary</h3>
+              <p className="mt-2 max-w-xs text-[13px] font-light text-cool">
+                I'm here whenever you need a moment to reflect, breathe, or simply think out loud.
+              </p>
+              <div className="mt-6 grid w-full grid-cols-2 gap-2">
                 {SUGGESTIONS.map((s) => (
                   <button
                     key={s}
@@ -158,7 +186,7 @@ function CompanionPanel({ onClose }: { onClose: () => void }) {
                       if (s === "I'm feeling anxious") { setBreathing(true); return; }
                       send(s);
                     }}
-                    className="kahf-btn rounded-[12px] border border-border bg-warm px-3 py-3 text-sm text-dusk hover:bg-lavender/20"
+                    className="kahf-btn rounded-[10px] border border-lavender bg-warm px-3 py-2.5 text-[12px] text-dusk hover:bg-lavender/20"
                   >
                     {s}
                   </button>
@@ -166,40 +194,73 @@ function CompanionPanel({ onClose }: { onClose: () => void }) {
               </div>
             </div>
           ) : (
-            <div className="space-y-4">
+            <div className="space-y-3">
               {messages.map((m, i) => (
                 <div key={i} className={m.role === "user" ? "flex justify-end" : "flex justify-start"}>
-                  <div className={`max-w-[85%] rounded-[12px] px-4 py-3 text-[15px] leading-relaxed ${
-                    m.role === "user" ? "bg-lavender text-dusk" : "border-l-2 border-lavender bg-warm text-dusk"
-                  }`}>
-                    {m.content || <span className="kahf-typing-dot" />}
+                  <div
+                    className={`max-w-[85%] px-4 py-3 text-[14px] leading-relaxed text-dusk ${
+                      m.role === "user"
+                        ? "bg-lavender"
+                        : "bg-warm shadow-soft"
+                    }`}
+                    style={{
+                      borderRadius: m.role === "user"
+                        ? "18px 18px 4px 18px"
+                        : "18px 18px 18px 4px",
+                    }}
+                  >
+                    {m.content || (
+                      <span>
+                        <span className="kahf-typing-dot" />
+                        <span className="kahf-typing-dot" />
+                        <span className="kahf-typing-dot" />
+                      </span>
+                    )}
                   </div>
                 </div>
               ))}
               {loading && messages[messages.length - 1]?.role === "user" && (
                 <div className="flex justify-start">
-                  <div className="rounded-[12px] border-l-2 border-lavender bg-warm px-4 py-3">
-                    <span className="kahf-typing-dot" /><span className="kahf-typing-dot" /><span className="kahf-typing-dot" />
+                  <div className="bg-warm px-4 py-3 shadow-soft" style={{ borderRadius: "18px 18px 18px 4px" }}>
+                    <span className="kahf-typing-dot" />
+                    <span className="kahf-typing-dot" />
+                    <span className="kahf-typing-dot" />
                   </div>
                 </div>
               )}
             </div>
           )}
 
-          {breathing && <BreathingExercise onDone={() => { setBreathing(false); send("I just did the breathing exercise — I feel a little softer."); }} />}
+          {breathing && (
+            <BreathingExercise
+              onDone={() => {
+                setBreathing(false);
+                send("I just did the breathing exercise — I feel a little softer.");
+              }}
+            />
+          )}
         </div>
 
-        <form onSubmit={(e) => { e.preventDefault(); send(input); }} className="border-t border-border bg-warm p-3">
+        {/* Input */}
+        <form
+          onSubmit={(e) => { e.preventDefault(); send(input); }}
+          className="bg-warm px-4 py-3"
+          style={{ borderTop: "1px solid rgba(201,192,224,0.3)" }}
+        >
           <div className="flex items-center gap-2">
             <input
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="Write something..."
-              className="flex-1 rounded-[10px] border border-border bg-mist px-4 py-3 text-[15px] text-dusk placeholder:text-cool"
+              className="flex-1 rounded-[12px] border border-transparent bg-mist px-4 py-2.5 text-[14px] text-dusk placeholder:text-cool focus:border-lavender focus:outline-none"
             />
-            <Button type="submit" size="icon" className="kahf-btn h-11 w-11 rounded-[12px] bg-gold text-dusk hover:bg-gold/90">
+            <button
+              type="submit"
+              aria-label="Send"
+              className="kahf-btn flex h-9 w-9 items-center justify-center rounded-[10px] bg-dusk text-[#e8dfc8] hover:bg-lavender hover:text-dusk"
+            >
               <Send className="h-4 w-4" />
-            </Button>
+            </button>
           </div>
         </form>
       </div>
