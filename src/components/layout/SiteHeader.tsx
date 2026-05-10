@@ -9,7 +9,7 @@ const nav = [
   { to: "/library", label: "Library" },
   { to: "/journey", label: "Journey" },
   { to: "/gift", label: "Gift" },
-  { to: "/partners", label: "Partners" },
+  { to: "/partners", label: "Become A Partners" },
 ];
 
 export function SiteHeader() {
