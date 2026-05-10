@@ -18,7 +18,7 @@ export function SiteFooter() {
           { to: "/journey", label: "My journey" },
           { to: "/gift", label: "Gift a session" },
         ]} />
-        <FooterCol title="Partners" links={[
+        <FooterCol title="Become A Partners" links={[
           { to: "/partners", label: "Become a partner" },
           { to: "/partners/clinical", label: "Clinical program" },
           { to: "/partners/corporate", label: "Corporate wellness" },
