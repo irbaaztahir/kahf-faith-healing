@@ -31,9 +31,9 @@ function PartnersLanding() {
           </p>
           <div className="mx-auto mt-12 grid max-w-3xl gap-5 md:grid-cols-2 kahf-stagger">
             <ProgramCard
-              to="/partners/clinical"
+              to="/partners/doctor"
               Icon={Stethoscope}
-              title="Clinical Partnership"
+              title="Doctor Program"
               desc="For doctors, GPs, psychiatrists and clinicians."
             />
             <ProgramCard
@@ -87,7 +87,7 @@ function PartnersLanding() {
         <div className="mx-auto flex max-w-5xl flex-col items-center gap-6 px-6 py-16 text-center md:flex-row md:justify-between md:text-left">
           <h2 className="font-display text-3xl text-dusk md:text-4xl">Ready to bring KAHF to your organization?</h2>
           <Button asChild className="kahf-btn h-12 rounded-[12px] bg-gold px-8 text-dusk hover:bg-gold/90">
-            <Link to="/partners/clinical">Apply for partnership <ArrowRight className="ml-2 h-4 w-4" /></Link>
+            <Link to="/partners/doctor">Apply for partnership <ArrowRight className="ml-2 h-4 w-4" /></Link>
           </Button>
         </div>
       </section>

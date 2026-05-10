@@ -6,6 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ShieldCheck, Lock, Heart, Star, Check } from "lucide-react";
 import { therapists } from "@/data/kahf";
+import { KahfLogo } from "@/components/brand/KahfLogo";
 import heroPattern from "@/assets/hero-pattern.jpg";
 
 export const Route = createFileRoute("/")({
@@ -49,6 +50,9 @@ function Hero() {
         <Badge className="mb-8 rounded-full border border-border/60 bg-card/70 px-4 py-1.5 text-[11px] font-normal uppercase tracking-[0.25em] text-muted-foreground hover:bg-card/70">
           A quiet space for Muslim hearts
         </Badge>
+        <div className="mb-6 flex justify-center">
+          <KahfLogo className="h-[72px] w-auto" />
+        </div>
         <h1 className="font-display leading-[1.05] text-foreground sm:text-6xl md:text-7xl lg:text-8xl font-mono text-7xl">
           Free Trial
         </h1>
