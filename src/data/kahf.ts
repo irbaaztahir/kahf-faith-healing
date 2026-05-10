@@ -18,6 +18,8 @@ export type Therapist = {
   approach: string;
   formats: string[];
   kahfPick?: boolean;
+  experience?: string;
+  availability?: string;
 };
 
 export const therapists: Therapist[] = [
@@ -68,6 +70,60 @@ export const therapists: Therapist[] = [
     gender: "female",
     bio: "Grief reshapes us. I sit with women in seasons of loss, depression, and quiet motherhood weariness.",
     approach: "Person-centered, somatic, and rooted in Islamic spiritual care.",
+    formats: ["Video", "Chat", "Voice"],
+  },
+  {
+    id: "amina-khalid",
+    name: "Dr. Amina Khalid",
+    credentials: "PhD, Clinical Psychologist",
+    photo: therapist1,
+    specialties: ["Anxiety", "Depression", "Postpartum"],
+    languages: ["English", "Arabic", "Urdu"],
+    rating: 4.9,
+    reviews: 87,
+    nextSlot: "Mon, 09:00",
+    price: 95,
+    gender: "female",
+    experience: "9 years",
+    availability: "Mon–Thu, mornings & evenings (GMT)",
+    bio: "Dr. Amina brings warmth, patience, and deep cultural understanding to every session. Having grown up between two cultures, she deeply understands the unique pressures faced by Muslim women navigating modern life and faith simultaneously.",
+    approach: "Cognitive Behavioural Therapy (CBT) integrated with Islamic mindfulness and tawakkul-based reframing.",
+    formats: ["Video", "Chat"],
+  },
+  {
+    id: "tariq-hussain",
+    name: "Ustadh Tariq Hussain",
+    credentials: "MA Marriage & Family Therapy",
+    photo: therapist2,
+    specialties: ["Marriage", "Family", "Co-parenting"],
+    languages: ["English", "Urdu", "Punjabi"],
+    rating: 5.0,
+    reviews: 134,
+    nextSlot: "Tue, 19:00",
+    price: 110,
+    gender: "male",
+    experience: "12 years",
+    availability: "Tue, Wed, Fri, evenings (GMT+5)",
+    bio: "Ustadh Tariq combines clinical training with deep Islamic scholarship, bringing a rare duality to marriage and family therapy. He has supported hundreds of Muslim couples in navigating conflict, rebuilding trust, and strengthening their bonds through both therapeutic and Islamic frameworks.",
+    approach: "Systemic family therapy integrated with Islamic marital guidance and conflict resolution.",
+    formats: ["Video", "Voice"],
+  },
+  {
+    id: "fatima-alrashid",
+    name: "Dr. Fatima Al-Rashid",
+    credentials: "PsyD, EMDR Certified",
+    photo: therapist3,
+    specialties: ["Grief", "Trauma", "Bereavement"],
+    languages: ["English", "Arabic", "French"],
+    rating: 4.9,
+    reviews: 76,
+    nextSlot: "Wed, 14:00",
+    price: 85,
+    gender: "female",
+    experience: "7 years",
+    availability: "Mon, Wed, Thu, flexible (GMT)",
+    bio: "Dr. Fatima specialises in walking with people through the darkest seasons of life. She believes deeply that grief is not weakness — in Islam, it is a form of love. Her sessions create a space where sorrow is honoured, faith is strengthened, and healing is possible.",
+    approach: "Trauma-informed therapy (EMDR) integrated with Islamic grief frameworks — sabr, tawakkul, and the Islamic understanding of loss.",
     formats: ["Video", "Chat", "Voice"],
   },
 ];
