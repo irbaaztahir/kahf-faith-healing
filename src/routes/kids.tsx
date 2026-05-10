@@ -8,7 +8,7 @@ import { Sparkles, BookOpen, Star, Trophy, Target, Award, Lock, Check } from "lu
 export const Route = createFileRoute("/kids")({
   head: () => ({
     meta: [
-      { title: "KAHF Kids — Learn. Play. Grow in Your Deen." },
+      { title: "Kahf\u00A0Kids \u2014 Learn. Play. Grow in Your Deen." },
       { name: "description", content: "Islamic games, quizzes, stories and challenges — made just for kids aged 6–14." },
     ],
   }),
@@ -209,7 +209,7 @@ function KidsPage() {
       </section>
 
       <p className="mx-auto max-w-4xl px-6 pb-12 text-center text-[12px] text-cool">
-        This section is designed for children. Parents — learn more about KAHF Kids.
+        This section is designed for children. Parents \u2014 learn more about Kahf\u00A0Kids.
       </p>
 
       <SiteFooter />
