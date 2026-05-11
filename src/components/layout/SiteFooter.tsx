@@ -8,7 +8,7 @@ export function SiteFooter() {
         <div className="space-y-4 md:col-span-2">
           <KahfWordmark />
           <p className="max-w-xs text-sm leading-relaxed text-cool">
-            Healing rooted in faith. A quiet space to grow, supported by verified Muslim therapists worldwide.
+            Healing rooted in faith. A quiet space to grow, supported by verified Islamic psychologists worldwide.
           </p>
         </div>
         <FooterCol title="Care" links={[
