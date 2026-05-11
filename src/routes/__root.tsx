@@ -36,7 +36,7 @@ export const Route = createRootRoute({
       { name: "description", content: "Faith-integrated mental wellness for Muslims worldwide. Verified Islamic therapists, journaling, and the Kahf Companion." },
       { name: "author", content: "KAHF" },
       { property: "og:title", content: "KAHF — Healing rooted in faith" },
-      { property: "og:description", content: "Verified Muslim therapists. Private, faith-sensitive care." },
+      { property: "og:description", content: "Verified Islamic psychologists. Private, faith-sensitive care." },
       { property: "og:type", content: "website" },
     ],
     links: [{ rel: "stylesheet", href: appCss }],
