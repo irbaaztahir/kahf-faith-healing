@@ -15,7 +15,7 @@ export const Route = createFileRoute("/")({
       { title: "KAHF — Faith Aligned Mental Health Platform" },
       { name: "description", content: "KAHF connects Muslims worldwide with verified Islamic psychologists and therapists. Faith-sensitive, clinically excellent care." },
       { property: "og:title", content: "KAHF — Faith Aligned Mental Health Platform" },
-      { property: "og:description", content: "Verified Muslim therapists. End-to-end encrypted. Faith-sensitive care." },
+      { property: "og:description", content: "Verified Islamic psychologists. End-to-end encrypted. Faith-sensitive care." },
     ],
   }),
   component: Landing,
