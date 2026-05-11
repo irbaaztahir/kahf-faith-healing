@@ -16,7 +16,7 @@ import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as SessionRouteImport } from './routes/session'
 import { Route as QuizRouteImport } from './routes/quiz'
 import { Route as PartnersRouteImport } from './routes/partners'
-import { Route as KidsRouteImport } from './routes/kids'
+import { Route as ParentsHubRouteImport } from './routes/parents-hub'
 import { Route as JourneyRouteImport } from './routes/journey'
 import { Route as JournalRouteImport } from './routes/journal'
 import { Route as GiftRouteImport } from './routes/gift'
@@ -69,9 +69,9 @@ const PartnersRoute = PartnersRouteImport.update({
   path: '/partners',
   getParentRoute: () => rootRouteImport,
 } as any)
-const KidsRoute = KidsRouteImport.update({
-  id: '/kids',
-  path: '/kids',
+const ParentsHubRoute = ParentsHubRouteImport.update({
+  id: '/parents-hub',
+  path: '/parents-hub',
   getParentRoute: () => rootRouteImport,
 } as any)
 const JourneyRoute = JourneyRouteImport.update({
@@ -163,7 +163,7 @@ export interface FileRoutesByFullPath {
   '/gift': typeof GiftRoute
   '/journal': typeof JournalRoute
   '/journey': typeof JourneyRoute
-  '/kids': typeof KidsRoute
+  '/parents-hub': typeof ParentsHubRoute
   '/partners': typeof PartnersRouteWithChildren
   '/quiz': typeof QuizRoute
   '/session': typeof SessionRoute
@@ -189,7 +189,7 @@ export interface FileRoutesByTo {
   '/gift': typeof GiftRoute
   '/journal': typeof JournalRoute
   '/journey': typeof JourneyRoute
-  '/kids': typeof KidsRoute
+  '/parents-hub': typeof ParentsHubRoute
   '/partners': typeof PartnersRouteWithChildren
   '/quiz': typeof QuizRoute
   '/session': typeof SessionRoute
@@ -216,7 +216,7 @@ export interface FileRoutesById {
   '/gift': typeof GiftRoute
   '/journal': typeof JournalRoute
   '/journey': typeof JourneyRoute
-  '/kids': typeof KidsRoute
+  '/parents-hub': typeof ParentsHubRoute
   '/partners': typeof PartnersRouteWithChildren
   '/quiz': typeof QuizRoute
   '/session': typeof SessionRoute
@@ -244,7 +244,7 @@ export interface FileRouteTypes {
     | '/gift'
     | '/journal'
     | '/journey'
-    | '/kids'
+    | '/parents-hub'
     | '/partners'
     | '/quiz'
     | '/session'
@@ -270,7 +270,7 @@ export interface FileRouteTypes {
     | '/gift'
     | '/journal'
     | '/journey'
-    | '/kids'
+    | '/parents-hub'
     | '/partners'
     | '/quiz'
     | '/session'
@@ -296,7 +296,7 @@ export interface FileRouteTypes {
     | '/gift'
     | '/journal'
     | '/journey'
-    | '/kids'
+    | '/parents-hub'
     | '/partners'
     | '/quiz'
     | '/session'
@@ -323,7 +323,7 @@ export interface RootRouteChildren {
   GiftRoute: typeof GiftRoute
   JournalRoute: typeof JournalRoute
   JourneyRoute: typeof JourneyRoute
-  KidsRoute: typeof KidsRoute
+  ParentsHubRoute: typeof ParentsHubRoute
   PartnersRoute: typeof PartnersRouteWithChildren
   QuizRoute: typeof QuizRoute
   SessionRoute: typeof SessionRoute
@@ -390,11 +390,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PartnersRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/kids': {
-      id: '/kids'
-      path: '/kids'
-      fullPath: '/kids'
-      preLoaderRoute: typeof KidsRouteImport
+    '/parents-hub': {
+      id: '/parents-hub'
+      path: '/parents-hub'
+      fullPath: '/parents-hub'
+      preLoaderRoute: typeof ParentsHubRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/journey': {
@@ -536,7 +536,7 @@ const rootRouteChildren: RootRouteChildren = {
   GiftRoute: GiftRoute,
   JournalRoute: JournalRoute,
   JourneyRoute: JourneyRoute,
-  KidsRoute: KidsRoute,
+  ParentsHubRoute: ParentsHubRoute,
   PartnersRoute: PartnersRouteWithChildren,
   QuizRoute: QuizRoute,
   SessionRoute: SessionRoute,
