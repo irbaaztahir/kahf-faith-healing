@@ -57,7 +57,7 @@ function Hero() {
           Faith Aligned Mental Health Platform
         </h1>
         <p className="mx-auto mt-8 max-w-xl text-lg leading-relaxed text-muted-foreground">
-          KAHF connects you with verified Muslim therapists worldwide — clinically excellent care that honours your values, your story, your deen.
+          KAHF connects you with verified Islamic psychologists worldwide — clinically excellent care that honours your values, your story, your deen.
         </p>
         <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
           <Button asChild size="lg" className="h-12 rounded-full bg-dusk px-7 text-mist hover:bg-dusk/90">
