@@ -12,9 +12,9 @@ import heroPattern from "@/assets/hero-pattern.jpg";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "KAHF — Free Trial" },
+      { title: "KAHF — Faith Aligned Mental Health Platform" },
       { name: "description", content: "KAHF connects Muslims worldwide with verified Islamic psychologists and therapists. Faith-sensitive, clinically excellent care." },
-      { property: "og:title", content: "KAHF — Free Trial" },
+      { property: "og:title", content: "KAHF — Faith Aligned Mental Health Platform" },
       { property: "og:description", content: "Verified Muslim therapists. End-to-end encrypted. Faith-sensitive care." },
     ],
   }),
@@ -54,7 +54,7 @@ function Hero() {
           <KahfLogo className="h-[72px] w-auto" />
         </div>
         <h1 className="font-display leading-[1.05] text-foreground sm:text-6xl md:text-7xl lg:text-8xl font-mono text-7xl">
-          Free Trial
+          Faith Aligned Mental Health Platform
         </h1>
         <p className="mx-auto mt-8 max-w-xl text-lg leading-relaxed text-muted-foreground">
           KAHF connects you with verified Muslim therapists worldwide — clinically excellent care that honours your values, your story, your deen.
