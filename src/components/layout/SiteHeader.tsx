@@ -8,7 +8,7 @@ const nav = [
   { to: "/therapists", label: "Therapists" },
   { to: "/library", label: "Library" },
   { to: "/journey", label: "Journey" },
-  { to: "/kids", label: "Kahf\u00A0Kids" },
+  { to: "/parents-hub", label: "Kahf\u00A0Parents" },
   { to: "/gift", label: "Gift" },
 ];
 
