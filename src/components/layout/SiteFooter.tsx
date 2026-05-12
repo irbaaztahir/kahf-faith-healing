@@ -14,7 +14,7 @@ export function SiteFooter() {
         <FooterCol title="Care" links={[
           { to: "/therapists", label: "Find a therapist" },
           { to: "/quiz", label: "Take the quiz" },
-          { to: "/library", label: "Kahf Library" },
+          
           { to: "/journey", label: "My journey" },
           { to: "/gift", label: "Gift a session" },
         ]} />

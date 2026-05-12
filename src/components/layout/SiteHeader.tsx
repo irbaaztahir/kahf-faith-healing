@@ -6,7 +6,7 @@ import { Menu, X, Stethoscope, Building2, ChevronDown } from "lucide-react";
 
 const nav = [
   { to: "/therapists", label: "Therapists" },
-  { to: "/library", label: "Library" },
+  
   { to: "/journey", label: "Journey" },
   { to: "/parents-hub", label: "Kahf\u00A0Parents" },
   { to: "/gift", label: "Gift" },
