@@ -49,6 +49,12 @@
   --color-gold: var(--gold);
   --color-cool: var(--cool);
   --color-body: var(--body);
+  --color-night: var(--night);
+  --color-deep-teal: var(--deep-teal);
+  --color-cream: var(--cream);
+  --color-warm-white: var(--warm-white);
+  --color-charcoal: var(--charcoal);
+  --color-slate: var(--slate);
 
   --color-chart-1: var(--chart-1);
   --color-chart-2: var(--chart-2);
