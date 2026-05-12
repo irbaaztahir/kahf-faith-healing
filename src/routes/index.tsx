@@ -53,7 +53,7 @@ function Hero() {
         <div className="mb-6 flex justify-center">
           <KahfLogo className="h-[72px] w-auto" />
         </div>
-        <h1 className="font-display leading-[1.05] text-foreground sm:text-6xl md:text-7xl lg:text-8xl text-7xl font-serif">
+        <h1 className="font-display leading-[1.05] text-foreground sm:text-6xl md:text-7xl lg:text-8xl font-serif text-5xl">
           Faith Aligned Mental Health Platform
         </h1>
         <p className="mx-auto mt-8 max-w-xl text-lg leading-relaxed text-muted-foreground">
