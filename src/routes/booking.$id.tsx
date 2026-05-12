@@ -18,7 +18,7 @@ export const Route = createFileRoute("/booking/$id")({
     if (!therapist) throw notFound();
     return { therapist };
   },
-  head: () => ({ meta: [{ title: "Book a session — KAHF" }] }),
+  head: () => ({ meta: [{ title: "Book a session — Kahf" }] }),
   notFoundComponent: () => <div className="p-12 text-center">Therapist not found</div>,
   errorComponent: ({ error }) => <div className="p-12 text-center">{error.message}</div>,
   component: BookingPage,

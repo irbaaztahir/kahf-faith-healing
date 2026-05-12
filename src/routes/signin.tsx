@@ -7,7 +7,7 @@ import { Eye, EyeOff } from "lucide-react";
 import { Divider, SocialButtons } from "./signup";
 
 export const Route = createFileRoute("/signin")({
-  head: () => ({ meta: [{ title: "Sign in — KAHF" }] }),
+  head: () => ({ meta: [{ title: "Sign in — Kahf" }] }),
   component: SignInPage,
 });
 

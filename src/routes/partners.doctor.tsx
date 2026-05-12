@@ -14,9 +14,9 @@ import {
 export const Route = createFileRoute("/partners/doctor")({
   head: () => ({
     meta: [
-      { title: "Doctor Program — KAHF Clinical Partnership" },
-      { name: "description", content: "Partner with KAHF as a clinician. Islamic mental health training, patient referral network, and a verified KAHF clinician profile." },
-      { property: "og:title", content: "KAHF Doctor Program" },
+      { title: "Doctor Program — Kahf Clinical Partnership" },
+      { name: "description", content: "Partner with Kahf as a clinician. Islamic mental health training, patient referral network, and a verified Kahf clinician profile." },
+      { property: "og:title", content: "Kahf Doctor Program" },
       { property: "og:description", content: "Help your Muslim patients access culturally aligned mental health support." },
     ],
   }),
@@ -27,7 +27,7 @@ const STATS = [
   { n: "1.8B+", d: "Muslims globally underserved in mental health" },
   { n: "90%", d: "Treatment gap in Muslim-majority countries" },
   { n: "60%+", d: "Muslim patients feel misunderstood by therapists" },
-  { n: "0", d: "Faith-aligned platforms before KAHF" },
+  { n: "0", d: "Faith-aligned platforms before Kahf" },
 ];
 
 const PROBLEMS = [
@@ -38,11 +38,11 @@ const PROBLEMS = [
 
 const FEATURES = [
   { Icon: GraduationCap, t: "Islamic Mental Health Training", d: "Self-paced online modules covering Islamic psychology, culturally sensitive communication, halal therapy approaches, and family dynamics. CME/CPD accredited." },
-  { Icon: Network, t: "Patient Referral Network", d: "Refer Muslim patients directly to verified KAHF therapists with one link. No paperwork. Matched within 24 hours. You stay informed, they get specialist care." },
-  { Icon: BadgeCheck, t: "Verified Clinician Profile", d: "Receive a verified KAHF clinician profile page. Muslim patients actively searching for culturally competent doctors will find you." },
-  { Icon: Calendar, t: "Quarterly Awareness Sessions", d: "Live quarterly webinars co-hosted with KAHF Islamic psychologists. Topics: Islamic grief, anxiety in Ramadan, end-of-life care, family conflict — clinically and spiritually framed." },
+  { Icon: Network, t: "Patient Referral Network", d: "Refer Muslim patients directly to verified Kahf therapists with one link. No paperwork. Matched within 24 hours. You stay informed, they get specialist care." },
+  { Icon: BadgeCheck, t: "Verified Clinician Profile", d: "Receive a verified Kahf clinician profile page. Muslim patients actively searching for culturally competent doctors will find you." },
+  { Icon: Calendar, t: "Quarterly Awareness Sessions", d: "Live quarterly webinars co-hosted with Kahf Islamic psychologists. Topics: Islamic grief, anxiety in Ramadan, end-of-life care, family conflict — clinically and spiritually framed." },
   { Icon: BookOpen, t: "Research Digest", d: "Monthly newsletter: Islamic mental health research, cultural competency updates, clinical case insights, and community data." },
-  { Icon: Award, t: "Partner Clinic Badge", d: "Display the KAHF Culturally Competent Clinic badge on your website and clinic materials — a visible trust signal for Muslim patients." },
+  { Icon: Award, t: "Partner Clinic Badge", d: "Display the Kahf Culturally Competent Clinic badge on your website and clinic materials — a visible trust signal for Muslim patients." },
 ];
 
 const TOPICS = [
@@ -57,7 +57,7 @@ const TOPICS = [
 const TIERS = [
   { name: "Individual Clinician", price: "$249", per: "/year", features: ["All 6 training modules", "Patient referral link", "Partner badge", "Research digest", "1 user"], cta: "Apply as Individual" },
   { name: "Clinic", price: "$999", per: "/year", featured: true, sub: "Up to 10 staff", features: ["Everything in Individual", "Shared clinic profile page", "Up to 10 staff accounts", "Priority partner support", "Quarterly webinar access"], cta: "Apply as Clinic" },
-  { name: "Hospital / Institution", price: "Custom", per: "", features: ["Everything in Clinic", "Unlimited staff", "Onsite training sessions", "Dedicated KAHF liaison", "Volume referral agreements"], cta: "Contact Us" },
+  { name: "Hospital / Institution", price: "Custom", per: "", features: ["Everything in Clinic", "Unlimited staff", "Onsite training sessions", "Dedicated Kahf liaison", "Volume referral agreements"], cta: "Contact Us" },
 ];
 
 function DoctorPage() {
