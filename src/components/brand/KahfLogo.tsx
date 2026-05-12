@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import logoSrc from "@/assets/kahf-logo.png";
 
 export function KahfLogo({ className = "h-10 w-auto" }: { className?: string }) {
-  return <img src={logoSrc} alt="KAHF" className={className} />;
+  return <img src={logoSrc} alt="Kahf" className={className} />;
 }
 
 export function KahfWordmark({
@@ -17,7 +17,7 @@ export function KahfWordmark({
   return (
     <Link to="/" className={`inline-flex items-center gap-3 text-dusk ${className}`}>
       <KahfLogo className={logoClassName} />
-      <span className={`font-display font-bold tracking-[0.18em] ${textClassName}`}>KAHF</span>
+      <span className={`font-display font-bold tracking-[0.18em] ${textClassName}`}>Kahf</span>
     </Link>
   );
 }

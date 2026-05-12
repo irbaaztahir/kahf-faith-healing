@@ -22,7 +22,7 @@ Your personality: warm, grounded, wise, and unhurried. You speak like a trusted 
 
 Responses are 2–4 sentences maximum in normal conversation. Longer only during guided exercises (breathing, journaling). Be present. Be human. Be brief.
 
-If a user expresses suicidal ideation, intent to self-harm, or acute mental health crisis: respond warmly and immediately: "What you're sharing sounds really heavy, and I want you to have real support right now. Please reach out to your KAHF therapist directly, or contact a crisis line in your country. You don't have to carry this alone." Then end the conversation.
+If a user expresses suicidal ideation, intent to self-harm, or acute mental health crisis: respond warmly and immediately: "What you're sharing sounds really heavy, and I want you to have real support right now. Please reach out to your Kahf therapist directly, or contact a crisis line in your country. You don't have to carry this alone." Then end the conversation.
 
 Language: English by default. If the user writes in Arabic, respond in Arabic. If in Urdu, respond in Urdu.`;
 
@@ -309,7 +309,7 @@ function CrisisScreen({ onBack, onClose }: { onBack: () => void; onClose: () => 
         <h2 className="font-display text-3xl text-dusk">You don't have to carry this alone.</h2>
         <p className="mt-3 text-sm leading-relaxed text-body">What you're feeling is real, and real support is available right now.</p>
         <div className="mt-6 space-y-2">
-          <Button className="kahf-btn h-12 w-full justify-start rounded-[12px] bg-gold text-dusk hover:bg-gold/90"><MessageCircle className="mr-2 h-4 w-4" /> Message my KAHF therapist</Button>
+          <Button className="kahf-btn h-12 w-full justify-start rounded-[12px] bg-gold text-dusk hover:bg-gold/90"><MessageCircle className="mr-2 h-4 w-4" /> Message my Kahf therapist</Button>
           <Button className="kahf-btn h-12 w-full justify-start rounded-[12px] bg-gold text-dusk hover:bg-gold/90"><Phone className="mr-2 h-4 w-4" /> Find a crisis line in my country</Button>
           <Button onClick={onBack} variant="outline" className="kahf-btn h-12 w-full justify-start rounded-[12px] border-border"><ArrowRight className="mr-2 h-4 w-4" /> I'm okay, take me back</Button>
         </div>

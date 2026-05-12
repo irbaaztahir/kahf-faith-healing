@@ -70,7 +70,7 @@ export function SignupPopup() {
         </button>
 
         <div className="px-7 pb-8 pt-7 text-center">
-          <p className="mb-4 font-display text-xl tracking-tight text-dusk">KAHF</p>
+          <p className="mb-4 font-display text-xl tracking-tight text-dusk">Kahf</p>
           <h2 className="font-display text-3xl leading-tight text-dusk">
             Your sanctuary is waiting.
           </h2>
