@@ -2,14 +2,20 @@ import { Link, useRouterState } from "@tanstack/react-router";
 import { KahfWordmark } from "@/components/brand/KahfLogo";
 import { Button } from "@/components/ui/button";
 import { useState, useRef } from "react";
-import { Menu, X, Stethoscope, Building2, ChevronDown } from "lucide-react";
+import { Menu, X, Stethoscope, Building2, GraduationCap, Users, ChevronDown } from "lucide-react";
 
 const nav = [
   { to: "/therapists", label: "Therapists" },
-  
-  { to: "/journey", label: "Journey" },
-  { to: "/parents-hub", label: "Kahf\u00A0Parents" },
-  { to: "/gift", label: "Gift" },
+  { to: "/resources", label: "Resources" },
+  { to: "/about", label: "About" },
+  { to: "/blog", label: "Blog" },
+];
+
+const programs = [
+  { to: "/partners/doctor", icon: Stethoscope, label: "Doctor Program", sub: "For clinicians & healthcare providers" },
+  { to: "/partners/corporate", icon: Building2, label: "Corporate Program", sub: "For companies & organizations" },
+  { to: "/programs/student", icon: GraduationCap, label: "Student Program", sub: "For universities & student bodies" },
+  { to: "/programs/family", icon: Users, label: "Family Program", sub: "For families navigating together" },
 ];
 
 export function SiteHeader() {
