@@ -94,7 +94,7 @@ export function SiteHeader() {
             <Link to="/signin">Sign in</Link>
           </Button>
           <Button asChild size="sm" className="kahf-btn h-10 rounded-[10px] bg-gold px-5 text-dusk hover:bg-gold/90">
-            <Link to="/signup">Sign up</Link>
+            <Link to="/quiz">Find your therapist</Link>
           </Button>
         </div>
         <button
@@ -122,7 +122,7 @@ export function SiteHeader() {
             </Link>
             <div className="mt-2 flex gap-2">
               <Button asChild variant="outline" className="flex-1 rounded-[10px] border-lavender"><Link to="/signin" onClick={() => setOpen(false)}>Sign in</Link></Button>
-              <Button asChild className="kahf-btn flex-1 rounded-[10px] bg-gold text-dusk hover:bg-gold/90"><Link to="/signup" onClick={() => setOpen(false)}>Sign up</Link></Button>
+              <Button asChild className="kahf-btn flex-1 rounded-[10px] bg-gold text-dusk hover:bg-gold/90"><Link to="/quiz" onClick={() => setOpen(false)}>Find your therapist</Link></Button>
             </div>
           </div>
         </div>

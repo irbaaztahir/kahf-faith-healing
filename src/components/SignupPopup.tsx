@@ -28,7 +28,7 @@ export function SignupPopup() {
     const t = setTimeout(() => {
       setOpen(true);
       sessionStorage.setItem(SESSION_KEY, "1");
-    }, 4500);
+    }, 3000);
     return () => clearTimeout(t);
   }, []);
 

@@ -1,6 +1,7 @@
 import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
 import { PageTransition } from "@/components/layout/PageTransition";
 import { CompanionFab } from "@/components/companion/CompanionFab";
+import { SignupPopup } from "@/components/SignupPopup";
 
 
 import appCss from "../styles.css?url";
@@ -67,6 +68,7 @@ function RootComponent() {
         <Outlet />
       </PageTransition>
       <CompanionFab />
+      <SignupPopup />
     </>
   );
 }
