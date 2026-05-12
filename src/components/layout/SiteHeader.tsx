@@ -112,13 +112,12 @@ export function SiteHeader() {
                 {n.label}
               </Link>
             ))}
-            <p className="mt-2 px-3 text-[11px] uppercase tracking-[0.2em] text-cool">Become A Partner</p>
-            <Link to="/partners/doctor" onClick={() => setOpen(false)} className="rounded-[10px] px-3 py-3 text-sm text-dusk hover:bg-mist">
-              Doctor Program
-            </Link>
-            <Link to="/partners/corporate" onClick={() => setOpen(false)} className="rounded-[10px] px-3 py-3 text-sm text-dusk hover:bg-mist">
-              Corporate Program
-            </Link>
+            <p className="mt-2 px-3 text-[11px] uppercase tracking-[0.2em] text-cool">Programs</p>
+            {programs.map((p) => (
+              <Link key={p.to} to={p.to} onClick={() => setOpen(false)} className="rounded-[10px] px-3 py-3 text-sm text-dusk hover:bg-mist">
+                {p.label}
+              </Link>
+            ))}
             <div className="mt-2 flex gap-2">
               <Button asChild variant="outline" className="flex-1 rounded-[10px] border-lavender"><Link to="/signin" onClick={() => setOpen(false)}>Sign in</Link></Button>
               <Button asChild className="kahf-btn flex-1 rounded-[10px] bg-gold text-dusk hover:bg-gold/90"><Link to="/quiz" onClick={() => setOpen(false)}>Find your therapist</Link></Button>
