@@ -39,70 +39,36 @@ function Landing() {
 
 function Hero() {
   return (
-    <section className="relative overflow-hidden bg-night text-cream">
+    <section className="relative overflow-hidden">
       <div
         aria-hidden
-        className="absolute inset-0 -z-0 opacity-[0.06] mix-blend-screen"
+        className="absolute inset-0 -z-10 opacity-[0.18]"
         style={{ backgroundImage: `url(${heroPattern})`, backgroundSize: "560px" }}
       />
-      <div
-        aria-hidden
-        className="absolute inset-0 -z-0"
-        style={{
-          background:
-            "radial-gradient(ellipse 80% 60% at 50% 35%, rgba(27,77,92,0.55), transparent 70%)",
-        }}
-      />
-      <div className="relative mx-auto max-w-7xl px-6 pt-28 pb-32 text-center md:pt-36 md:pb-40">
-        <p
-          className="mb-6 font-arabic text-3xl text-gold md:text-4xl"
-          style={{ direction: "rtl" }}
-        >
-          كَهْف
-        </p>
-        <p className="mb-6 text-[11px] font-medium uppercase tracking-[0.3em] text-gold">
-          A Sacred Space for Muslim Mental Wellness
-        </p>
-        <h1 className="mx-auto max-w-4xl font-display text-5xl leading-[1.05] text-cream md:text-7xl lg:text-[5.5rem]">
-          A quiet space to <span className="italic">heal</span>, rooted in faith.
+      <div className="absolute inset-0 -z-10 bg-gradient-hero opacity-90" />
+      <div className="mx-auto max-w-7xl px-6 pt-24 pb-32 text-center md:pt-32 md:pb-40">
+        <Badge className="mb-8 rounded-full border border-border/60 bg-card/70 px-4 py-1.5 text-[11px] font-normal uppercase tracking-[0.25em] text-muted-foreground hover:bg-card/70">
+          A quiet space for Muslim hearts
+        </Badge>
+        <div className="mb-6 flex justify-center">
+          <KahfLogo className="h-[72px] w-auto" />
+        </div>
+        <h1 className="font-display leading-[1.05] text-foreground sm:text-6xl md:text-7xl lg:text-8xl font-serif text-5xl">
+          Faith Aligned Mental Health Platform
         </h1>
-        <p className="mx-auto mt-8 max-w-xl text-lg leading-relaxed text-cream/80">
-          Kahf connects you with verified Muslim therapists worldwide — clinically
-          excellent care that honours your values, your story, your deen.
+        <p className="mx-auto mt-8 max-w-xl text-lg leading-relaxed text-muted-foreground">
+          Kahf connects you with verified Islamic psychologists worldwide — clinically excellent care that honours your values, your story, your deen.
         </p>
         <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
-          <Button
-            asChild
-            size="lg"
-            className="kahf-btn h-12 rounded-full bg-gold px-7 font-semibold text-night hover:brightness-110"
-          >
-            <Link to="/quiz">Find a Therapist</Link>
+          <Button asChild size="lg" className="h-12 rounded-full bg-dusk px-7 text-mist hover:bg-dusk/90">
+            <Link to="/quiz">Find your therapist</Link>
           </Button>
-          <Button
-            asChild
-            size="lg"
-            variant="outline"
-            className="kahf-btn h-12 rounded-full border-cream/40 bg-transparent px-7 text-cream hover:bg-cream/10"
-          >
-            <Link to="/partners/doctor">Explore Programs</Link>
+          <Button asChild size="lg" variant="ghost" className="h-12 rounded-full px-7 text-foreground hover:bg-card/60">
+            <Link to="/therapist-portal">For therapists →</Link>
           </Button>
-        </div>
-        <div className="mx-auto mt-14 flex max-w-3xl flex-wrap items-center justify-center gap-x-10 gap-y-4 text-xs text-cream/65">
-          <TrustItem icon={ShieldCheck} label="500+ Muslim Therapists" />
-          <TrustItem icon={Lock} label="Sharia-Conscious Care" />
-          <TrustItem icon={Heart} label="Clinically Verified" />
         </div>
       </div>
     </section>
-  );
-}
-
-function TrustItem({ icon: Icon, label }: { icon: typeof ShieldCheck; label: string }) {
-  return (
-    <div className="flex items-center gap-2">
-      <Icon className="h-4 w-4 text-gold" />
-      <span>{label}</span>
-    </div>
   );
 }
 
