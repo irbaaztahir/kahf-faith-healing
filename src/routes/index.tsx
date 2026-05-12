@@ -12,9 +12,9 @@ import heroPattern from "@/assets/hero-pattern.jpg";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "KAHF — Faith Aligned Mental Health Platform" },
-      { name: "description", content: "KAHF connects Muslims worldwide with verified Islamic psychologists and therapists. Faith-sensitive, clinically excellent care." },
-      { property: "og:title", content: "KAHF — Faith Aligned Mental Health Platform" },
+      { title: "Kahf — Faith Aligned Mental Health Platform" },
+      { name: "description", content: "Kahf connects Muslims worldwide with verified Islamic psychologists and therapists. Faith-sensitive, clinically excellent care." },
+      { property: "og:title", content: "Kahf — Faith Aligned Mental Health Platform" },
       { property: "og:description", content: "Verified Islamic psychologists. End-to-end encrypted. Faith-sensitive care." },
     ],
   }),
@@ -57,7 +57,7 @@ function Hero() {
           Faith Aligned Mental Health Platform
         </h1>
         <p className="mx-auto mt-8 max-w-xl text-lg leading-relaxed text-muted-foreground">
-          KAHF connects you with verified Islamic psychologists worldwide — clinically excellent care that honours your values, your story, your deen.
+          Kahf connects you with verified Islamic psychologists worldwide — clinically excellent care that honours your values, your story, your deen.
         </p>
         <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
           <Button asChild size="lg" className="h-12 rounded-full bg-dusk px-7 text-mist hover:bg-dusk/90">
@@ -143,7 +143,7 @@ function TherapistShowcase() {
                 <img src={t.photo} alt={t.name} loading="lazy" className="h-full w-full object-cover" />
                 {t.kahfPick && (
                   <Badge className="absolute left-4 top-4 rounded-full bg-secondary px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-secondary-foreground">
-                    KAHF Pick
+                    Kahf Pick
                   </Badge>
                 )}
               </div>

@@ -8,7 +8,7 @@ import { moodScale } from "@/data/kahf";
 import { Lock } from "lucide-react";
 
 export const Route = createFileRoute("/journal")({
-  head: () => ({ meta: [{ title: "Journal — KAHF" }] }),
+  head: () => ({ meta: [{ title: "Journal — Kahf" }] }),
   component: JournalPage,
 });
 

@@ -6,7 +6,7 @@ import { therapists } from "@/data/kahf";
 import { ArrowLeft, Check, Star, AlertTriangle } from "lucide-react";
 
 export const Route = createFileRoute("/quiz")({
-  head: () => ({ meta: [{ title: "Find your therapist — KAHF" }] }),
+  head: () => ({ meta: [{ title: "Find your therapist — Kahf" }] }),
   component: QuizPage,
 });
 

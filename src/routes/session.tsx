@@ -8,7 +8,7 @@ import { therapists } from "@/data/kahf";
 import heroPattern from "@/assets/hero-pattern.jpg";
 
 export const Route = createFileRoute("/session")({
-  head: () => ({ meta: [{ title: "Session room — KAHF" }] }),
+  head: () => ({ meta: [{ title: "Session room — Kahf" }] }),
   component: SessionRoom,
 });
 

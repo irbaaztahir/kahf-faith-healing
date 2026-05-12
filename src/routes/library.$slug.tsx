@@ -13,9 +13,9 @@ export const Route = createFileRoute("/library/$slug")({
   },
   head: ({ loaderData }) => ({
     meta: [
-      { title: `${loaderData?.item.title ?? "Library"} — KAHF Library` },
-      { name: "description", content: `${loaderData?.item.type} by ${loaderData?.item.author} on KAHF.` },
-      { property: "og:title", content: loaderData?.item.title ?? "KAHF Library" },
+      { title: `${loaderData?.item.title ?? "Library"} — Kahf Library` },
+      { name: "description", content: `${loaderData?.item.type} by ${loaderData?.item.author} on Kahf.` },
+      { property: "og:title", content: loaderData?.item.title ?? "Kahf Library" },
     ],
   }),
   notFoundComponent: () => (

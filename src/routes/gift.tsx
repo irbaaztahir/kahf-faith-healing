@@ -8,9 +8,9 @@ import { Check, Lock, Heart } from "lucide-react";
 export const Route = createFileRoute("/gift")({
   head: () => ({
     meta: [
-      { title: "Gift a Session — KAHF" },
-      { name: "description", content: "Give the gift of healing. Send a single therapy session, a session trio, or a monthly KAHF membership." },
-      { property: "og:title", content: "Gift a Session — KAHF" },
+      { title: "Gift a Session — Kahf" },
+      { name: "description", content: "Give the gift of healing. Send a single therapy session, a session trio, or a monthly Kahf membership." },
+      { property: "og:title", content: "Gift a Session — Kahf" },
       { property: "og:description", content: "A thoughtful gift for someone you love." },
     ],
   }),
@@ -18,7 +18,7 @@ export const Route = createFileRoute("/gift")({
 });
 
 const OPTIONS = [
-  { id: "single", title: "Single session", price: "$95", desc: "One full therapy session with any KAHF therapist. They choose who feels right for them.", note: "Sessions range from $85–$110 depending on therapist. This credit covers any session." },
+  { id: "single", title: "Single session", price: "$95", desc: "One full therapy session with any Kahf therapist. They choose who feels right for them.", note: "Sessions range from $85–$110 depending on therapist. This credit covers any session." },
   { id: "trio", title: "Session trio", price: "$270", desc: "Three sessions — enough to begin, enough to feel the difference.", badge: "Most thoughtful" },
   { id: "monthly", title: "Monthly membership", price: "$59/month", desc: "A full month of healing. 4 sessions, journaling, and the Kahf Companion. Cancel anytime." },
 ];

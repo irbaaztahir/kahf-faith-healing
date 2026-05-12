@@ -10,7 +10,7 @@ import { therapists, languages, concerns } from "@/data/kahf";
 import { Search, Star, Sparkles } from "lucide-react";
 
 export const Route = createFileRoute("/therapists/")({
-  head: () => ({ meta: [{ title: "Browse therapists — KAHF" }] }),
+  head: () => ({ meta: [{ title: "Browse therapists — Kahf" }] }),
   component: TherapistsPage,
 });
 
@@ -72,7 +72,7 @@ function TherapistsPage() {
                   <img src={t.photo} alt={t.name} loading="lazy" className="h-full w-full object-cover" />
                   {t.kahfPick && (
                     <Badge className="absolute left-3 top-3 gap-1 rounded-full bg-secondary px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-secondary-foreground">
-                      <Sparkles className="h-3 w-3" /> KAHF Pick
+                      <Sparkles className="h-3 w-3" /> Kahf Pick
                     </Badge>
                   )}
                 </div>

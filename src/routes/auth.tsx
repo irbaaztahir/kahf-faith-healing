@@ -7,7 +7,7 @@ import { KahfWordmark } from "@/components/brand/KahfLogo";
 import heroPattern from "@/assets/hero-pattern.jpg";
 
 export const Route = createFileRoute("/auth")({
-  head: () => ({ meta: [{ title: "Sign in — KAHF" }] }),
+  head: () => ({ meta: [{ title: "Sign in — Kahf" }] }),
   component: AuthPage,
 });
 
@@ -47,7 +47,7 @@ function AuthPage() {
             </Button>
 
             <p className="mt-6 text-center text-sm text-muted-foreground">
-              {mode === "signin" ? "New to KAHF?" : "Already have an account?"}{" "}
+              {mode === "signin" ? "New to Kahf?" : "Already have an account?"}{" "}
               <button onClick={() => setMode(mode === "signin" ? "signup" : "signin")} className="text-foreground underline-offset-4 hover:underline">
                 {mode === "signin" ? "Create one" : "Sign in"}
               </button>

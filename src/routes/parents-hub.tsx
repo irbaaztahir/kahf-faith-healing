@@ -35,7 +35,7 @@ export const Route = createFileRoute("/parents-hub")({
       {
         property: "og:description",
         content:
-          "Guides, tools, and expert advice for Muslim parents — by KAHF's verified therapists.",
+          "Guides, tools, and expert advice for Muslim parents — by Kahf's verified therapists.",
       },
     ],
   }),
@@ -144,7 +144,7 @@ const TOOLKIT = [
   },
   {
     title: "Parent Mood Journal",
-    desc: "A private journaling space for parents inside KAHF — track your own emotional patterns, triggers, and growth as a parent.",
+    desc: "A private journaling space for parents inside Kahf — track your own emotional patterns, triggers, and growth as a parent.",
     tag: "Members Only",
     cta: "Open Journal",
   },
@@ -187,7 +187,7 @@ const SESSIONS = [
   {
     title: "Single Parent Consultation",
     price: "$85",
-    desc: "A one-off session to work through a specific parenting challenge with a KAHF therapist.",
+    desc: "A one-off session to work through a specific parenting challenge with a Kahf therapist.",
     cta: "Book Session",
   },
   {
@@ -219,14 +219,14 @@ const QA = [
   },
   {
     q: "I feel like I'm failing as a parent. I lose my temper too often. Where do I start?",
-    a: "Start with self-compassion. You cannot regulate your child's emotions if you cannot regulate your own. This is not a character flaw — it is a skill. KAHF's parent support sessions are specifically designed for this.",
+    a: "Start with self-compassion. You cannot regulate your child's emotions if you cannot regulate your own. This is not a character flaw — it is a skill. Kahf's parent support sessions are specifically designed for this.",
   },
 ];
 
 const TESTIMONIALS = [
   {
     quote:
-      "I never realized how much my own unresolved anxiety was affecting my children. KAHF Parents helped me see myself as a parent more clearly — and more kindly.",
+      "I never realized how much my own unresolved anxiety was affecting my children. Kahf Parents helped me see myself as a parent more clearly — and more kindly.",
     name: "Mariam, mother of 3, London",
   },
   {
@@ -243,24 +243,24 @@ const TESTIMONIALS = [
 
 const FAQ = [
   {
-    q: "Is KAHF Parents only for Muslim parents?",
-    a: "KAHF is designed with Islamic values as its foundation but anyone who resonates with a faith-aligned, culturally sensitive approach to parenting is welcome.",
+    q: "Is Kahf Parents only for Muslim parents?",
+    a: "Kahf is designed with Islamic values as its foundation but anyone who resonates with a faith-aligned, culturally sensitive approach to parenting is welcome.",
   },
   {
     q: "Do I need a subscription to access the resources?",
-    a: "Many guides, tools, and the scenario cards are completely free. The Parent Toolkit journal and some premium guides require a KAHF subscription.",
+    a: "Many guides, tools, and the scenario cards are completely free. The Parent Toolkit journal and some premium guides require a Kahf subscription.",
   },
   {
     q: "Can I book a session for my child directly?",
-    a: "Yes. KAHF has therapists who specialize in working with children and adolescents. You can book on your child's behalf from the therapist discovery page.",
+    a: "Yes. Kahf has therapists who specialize in working with children and adolescents. You can book on your child's behalf from the therapist discovery page.",
   },
   {
     q: "How are the guides created?",
-    a: "Every guide is written or reviewed by a KAHF verified therapist with specific training in child and family psychology. Nothing is AI-generated without therapist review.",
+    a: "Every guide is written or reviewed by a Kahf verified therapist with specific training in child and family psychology. Nothing is AI-generated without therapist review.",
   },
   {
     q: "I am struggling as a parent myself — is there support for me?",
-    a: "Absolutely. Parent burnout and emotional overwhelm are real. KAHF's parent specialist sessions are specifically for you — not just your children.",
+    a: "Absolutely. Parent burnout and emotional overwhelm are real. Kahf's parent specialist sessions are specifically for you — not just your children.",
   },
 ];
 
@@ -410,7 +410,7 @@ function ParentsHubPage() {
             { n: "1 in 3", d: "Muslim children report feeling misunderstood at home" },
             { n: "68%", d: "parents feel unprepared for their child's emotional needs" },
             { n: "4x", d: "more effective parenting with consistent emotional attunement" },
-            { n: "0", d: "faith-aligned parenting platforms before KAHF Parents" },
+            { n: "0", d: "faith-aligned parenting platforms before Kahf Parents" },
           ].map((s) => (
             <div key={s.n} className="text-center">
               <p className="font-display text-4xl font-bold text-dusk md:text-5xl">{s.n}</p>
@@ -449,7 +449,7 @@ function ParentsHubPage() {
         <div className="mx-auto max-w-7xl px-6">
           <div className="mb-10 text-center">
             <h2 className="font-display text-3xl text-dusk md:text-4xl">This Week's Featured Guides</h2>
-            <p className="mt-2 text-sm text-cool">Written and reviewed by KAHF's verified Islamic therapists and child psychologists.</p>
+            <p className="mt-2 text-sm text-cool">Written and reviewed by Kahf's verified Islamic therapists and child psychologists.</p>
           </div>
           <div className="kahf-stagger grid gap-6 md:grid-cols-3">
             {GUIDES.map((g) => (
@@ -487,7 +487,7 @@ function ParentsHubPage() {
       <section className="py-20" style={{ background: "rgba(201,192,224,0.12)" }}>
         <div className="mx-auto max-w-7xl px-6">
           <div className="mb-10 text-center">
-            <h2 className="font-display text-3xl text-dusk md:text-4xl">The KAHF Parent Toolkit</h2>
+            <h2 className="font-display text-3xl text-dusk md:text-4xl">The Kahf Parent Toolkit</h2>
             <p className="mt-2 text-sm text-cool">Practical tools you can use today — not just theory.</p>
           </div>
           <div className="kahf-stagger grid gap-6 md:grid-cols-2">
@@ -542,7 +542,7 @@ function ParentsHubPage() {
               Sometimes You Need to Talk to Someone Too
             </h2>
             <p className="mx-auto mt-3 max-w-2xl text-sm" style={{ color: "rgba(232,223,200,0.75)" }}>
-              KAHF's therapists offer dedicated parent support sessions — not just for children, but for you as a parent navigating the weight of raising the next generation.
+              Kahf's therapists offer dedicated parent support sessions — not just for children, but for you as a parent navigating the weight of raising the next generation.
             </p>
           </div>
           <div className="kahf-stagger grid gap-6 md:grid-cols-3">
@@ -568,7 +568,7 @@ function ParentsHubPage() {
       <section className="bg-mist py-20">
         <div className="mx-auto max-w-4xl px-6">
           <div className="mb-10 text-center">
-            <h2 className="font-display text-3xl text-dusk md:text-4xl">Questions from the KAHF Parent Community</h2>
+            <h2 className="font-display text-3xl text-dusk md:text-4xl">Questions from the Kahf Parent Community</h2>
             <p className="mt-2 text-sm text-cool">Real questions from parents — answered by our verified therapists.</p>
           </div>
           <div className="kahf-stagger space-y-4">
@@ -597,7 +597,7 @@ function ParentsHubPage() {
       {/* TESTIMONIALS */}
       <section className="py-20" style={{ background: "rgba(201,192,224,0.1)" }}>
         <div className="mx-auto max-w-7xl px-6">
-          <h2 className="mb-10 text-center font-display text-3xl text-dusk md:text-4xl">What KAHF Parents Are Saying</h2>
+          <h2 className="mb-10 text-center font-display text-3xl text-dusk md:text-4xl">What Kahf Parents Are Saying</h2>
           <div className="kahf-stagger grid gap-6 md:grid-cols-3">
             {TESTIMONIALS.map((t) => (
               <figure
