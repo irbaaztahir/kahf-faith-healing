@@ -67,7 +67,6 @@ function RootComponent() {
         <Outlet />
       </PageTransition>
       <CompanionFab />
-      <SignupPopup />
     </>
   );
 }
