@@ -94,7 +94,7 @@ export function SiteHeader() {
             <Link to="/signin">Sign in</Link>
           </Button>
           <Button asChild size="sm" className="kahf-btn h-10 rounded-[10px] bg-gold px-5 text-dusk hover:bg-gold/90">
-            <Link to="/signup">Sign up</Link>
+            <Link to="/quiz">Find your therapist</Link>
           </Button>
         </div>
         <button
