@@ -65,7 +65,7 @@
 :root {
   --radius: 1rem;
 
-  /* KAHF locked palette */
+  /* Kahf locked palette */
   --lavender: #c9c0e0;
   --sage:     #a8c5b0;
   --mist:     #f5f3f7;
@@ -161,7 +161,7 @@
 }
 
 /* ==========================================================================
-   KAHF GLOBAL ANIMATION SYSTEM
+   Kahf GLOBAL ANIMATION SYSTEM
    Page transitions, button feel, card hover, modals, stagger, form fields.
    ========================================================================== */
 @keyframes kahf-page-in {

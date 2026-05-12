@@ -9,9 +9,9 @@ import { ApplicationModal } from "./partners.clinical";
 export const Route = createFileRoute("/partners/corporate")({
   head: () => ({
     meta: [
-      { title: "Corporate Wellness Program — KAHF" },
+      { title: "Corporate Wellness Program — Kahf" },
       { name: "description", content: "Subsidized therapy, quarterly live sessions, and a 4-stop healing journey for your team. Faith-rooted mental wellness for Muslim employees." },
-      { property: "og:title", content: "KAHF Corporate Wellness" },
+      { property: "og:title", content: "Kahf Corporate Wellness" },
       { property: "og:description", content: "Invest in your people. Build a culture that actually cares." },
     ],
   }),
@@ -22,20 +22,20 @@ const STATS = [
   "73% of Muslim employees feel unsupported at work",
   "28% lower absenteeism in companies with wellness programs",
   "1 in 3 employees would use therapy if their employer provided it",
-  "4.8 / 5 average KAHF session satisfaction rating",
+  "4.8 / 5 average Kahf session satisfaction rating",
 ];
 
 const PILLARS = [
-  { t: "Subsidized therapy access", d: "Your company purchases a pool of session credits at 35% below standard pricing ($55/session vs $85–$110 retail). Employees redeem credits anonymously through their own private KAHF accounts. The employer never sees who used what — only aggregate usage numbers." },
-  { t: "Quarterly live sessions", d: "Once per quarter, KAHF delivers a live 90-minute mental wellness session to your enrolled employees — in-person or virtual, your choice. Led by a verified Islamic psychologist and/or scholar. Sessions are recorded and added to your company's KAHF portal." },
-  { t: "Employee enrollment portal", d: "Your organization receives a private branded KAHF portal at kahf.app/partners/[yourcompany]. Employees enroll themselves — no HR involvement in their personal journey. All individual data is encrypted and invisible to employers." },
+  { t: "Subsidized therapy access", d: "Your company purchases a pool of session credits at 35% below standard pricing ($55/session vs $85–$110 retail). Employees redeem credits anonymously through their own private Kahf accounts. The employer never sees who used what — only aggregate usage numbers." },
+  { t: "Quarterly live sessions", d: "Once per quarter, Kahf delivers a live 90-minute mental wellness session to your enrolled employees — in-person or virtual, your choice. Led by a verified Islamic psychologist and/or scholar. Sessions are recorded and added to your company's Kahf portal." },
+  { t: "Employee enrollment portal", d: "Your organization receives a private branded Kahf portal at kahf.app/partners/[yourcompany]. Employees enroll themselves — no HR involvement in their personal journey. All individual data is encrypted and invisible to employers." },
 ];
 
 const STOPS = [
   {
     n: 1, status: "complete", title: "Foundation", months: "Month 1–2",
     items: [
-      "Welcome 1:1 session with a KAHF therapist — baseline assessment, goal setting",
+      "Welcome 1:1 session with a Kahf therapist — baseline assessment, goal setting",
       "Recorded workshop: 'Understanding your mental wellness baseline' (45 min)",
       "Mood tracking activated — 5 gentle journal prompts over 2 weeks",
       "Milestone unlocked: 'Foundation Complete'",
@@ -65,15 +65,15 @@ const STOPS = [
       "2 therapy sessions on sustaining progress and long-term independence",
       "Company-wide quarterly live session (90 min, all enrolled employees)",
       "Journey graduation: downloadable 'Healing Journey Complete' certificate",
-      "Post-program: 20% alumni discount on KAHF subscriptions",
+      "Post-program: 20% alumni discount on Kahf subscriptions",
     ],
   },
 ];
 
 const TIERS = [
   { name: "Starter", emp: "up to 25 employees", price: "$1,500", per: "/quarter", features: ["50 session credits ($55/session)", "1 quarterly live session", "Basic employer dashboard", "4-stop journey for all enrolled"] },
-  { name: "Growth", emp: "up to 100 employees", price: "$4,500", per: "/quarter", featured: true, features: ["200 session credits", "2 quarterly live sessions", "Full dashboard with journey analytics", "Dedicated KAHF partner contact"] },
-  { name: "Enterprise", emp: "100+ employees", price: "Custom", per: "", features: ["Unlimited session credits", "Monthly live sessions", "Custom branded employee portal", "Dedicated KAHF account manager"] },
+  { name: "Growth", emp: "up to 100 employees", price: "$4,500", per: "/quarter", featured: true, features: ["200 session credits", "2 quarterly live sessions", "Full dashboard with journey analytics", "Dedicated Kahf partner contact"] },
+  { name: "Enterprise", emp: "100+ employees", price: "Custom", per: "", features: ["Unlimited session credits", "Monthly live sessions", "Custom branded employee portal", "Dedicated Kahf account manager"] },
 ];
 
 function Corporate() {

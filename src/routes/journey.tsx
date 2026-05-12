@@ -9,9 +9,9 @@ import { Award, Lock, Download, TrendingUp } from "lucide-react";
 export const Route = createFileRoute("/journey")({
   head: () => ({
     meta: [
-      { title: "Your healing journey — KAHF" },
+      { title: "Your healing journey — Kahf" },
       { name: "description", content: "A personal map of every session, journal entry, and step on your healing journey." },
-      { property: "og:title", content: "Your healing journey — KAHF" },
+      { property: "og:title", content: "Your healing journey — Kahf" },
       { property: "og:description", content: "Every session, every entry, every step — it all matters." },
     ],
   }),
@@ -69,7 +69,7 @@ function Journey() {
         <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4 kahf-stagger">
           <Stat label="Sessions completed" value="6" />
           <Stat label="Journal entries" value="14" />
-          <Stat label="Days on KAHF" value="42" />
+          <Stat label="Days on Kahf" value="42" />
           <Stat label="Check-in streak" value="9" />
         </div>
 

@@ -10,7 +10,7 @@ export const Route = createFileRoute("/api/companion-chat")({
           const { messages, system } = (await request.json()) as { messages: { role: string; content: string }[]; system: string };
           const last = messages[messages.length - 1]?.content ?? "";
           if (CRISIS_RX.test(last)) {
-            const body = "data: " + JSON.stringify({ choices: [{ delta: { content: "What you're sharing sounds really heavy, and I want you to have real support right now. Please reach out to your KAHF therapist directly, or contact a crisis line in your country. You don't have to carry this alone." } }] }) + "\n\ndata: [DONE]\n\n";
+            const body = "data: " + JSON.stringify({ choices: [{ delta: { content: "What you're sharing sounds really heavy, and I want you to have real support right now. Please reach out to your Kahf therapist directly, or contact a crisis line in your country. You don't have to carry this alone." } }] }) + "\n\ndata: [DONE]\n\n";
             return new Response(body, { headers: { "Content-Type": "text/event-stream" } });
           }
           const apiKey = process.env.LOVABLE_API_KEY;

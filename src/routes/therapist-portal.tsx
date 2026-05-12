@@ -9,7 +9,7 @@ import { therapists } from "@/data/kahf";
 import { ShieldCheck, DollarSign, Calendar, Users } from "lucide-react";
 
 export const Route = createFileRoute("/therapist-portal")({
-  head: () => ({ meta: [{ title: "Therapist portal — KAHF" }] }),
+  head: () => ({ meta: [{ title: "Therapist portal — Kahf" }] }),
   component: TherapistPortal,
 });
 

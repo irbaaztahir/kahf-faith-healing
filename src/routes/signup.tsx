@@ -6,7 +6,7 @@ import { KahfLogo } from "@/components/brand/KahfLogo";
 import { Eye, EyeOff } from "lucide-react";
 
 export const Route = createFileRoute("/signup")({
-  head: () => ({ meta: [{ title: "Create your account — KAHF" }] }),
+  head: () => ({ meta: [{ title: "Create your account — Kahf" }] }),
   component: SignupPage,
 });
 
@@ -43,7 +43,7 @@ function SignupPage() {
 
           <label className="flex items-start gap-2 pt-2 text-[12px] text-cool">
             <input type="checkbox" required className="mt-0.5 h-4 w-4 accent-lavender" />
-            <span>I agree to KAHF's <a className="text-dusk underline">Terms of Service</a> and <a className="text-dusk underline">Privacy Policy</a></span>
+            <span>I agree to Kahf's <a className="text-dusk underline">Terms of Service</a> and <a className="text-dusk underline">Privacy Policy</a></span>
           </label>
           <label className="flex items-start gap-2 text-[12px] text-cool">
             <input type="checkbox" required className="mt-0.5 h-4 w-4 accent-lavender" />

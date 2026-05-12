@@ -14,7 +14,7 @@ export const Route = createFileRoute("/therapists/$id")({
     return { therapist };
   },
   head: ({ loaderData }) => ({
-    meta: [{ title: `${loaderData?.therapist.name ?? "Therapist"} — KAHF` }],
+    meta: [{ title: `${loaderData?.therapist.name ?? "Therapist"} — Kahf` }],
   }),
   notFoundComponent: () => (
     <div className="min-h-screen bg-background">
@@ -46,7 +46,7 @@ function ProfilePage() {
               <div>
                 {t.kahfPick && (
                   <Badge className="mb-3 rounded-full bg-secondary px-3 py-1 text-[10px] uppercase tracking-[0.2em] text-secondary-foreground">
-                    KAHF Pick
+                    Kahf Pick
                   </Badge>
                 )}
                 <h1 className="font-display text-4xl leading-tight text-foreground md:text-5xl">{t.name}</h1>

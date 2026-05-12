@@ -6,7 +6,7 @@ import { KahfLogo } from "@/components/brand/KahfLogo";
 import { Check } from "lucide-react";
 
 export const Route = createFileRoute("/forgot-password")({
-  head: () => ({ meta: [{ title: "Reset your password — KAHF" }] }),
+  head: () => ({ meta: [{ title: "Reset your password — Kahf" }] }),
   component: ForgotPage,
 });
 

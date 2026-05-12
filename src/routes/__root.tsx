@@ -32,10 +32,10 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "KAHF — Healing rooted in faith" },
+      { title: "Kahf — Healing rooted in faith" },
       { name: "description", content: "Faith-integrated mental wellness for Muslims worldwide. Verified Islamic therapists, journaling, and the Kahf Companion." },
-      { name: "author", content: "KAHF" },
-      { property: "og:title", content: "KAHF — Healing rooted in faith" },
+      { name: "author", content: "Kahf" },
+      { property: "og:title", content: "Kahf — Healing rooted in faith" },
       { property: "og:description", content: "Verified Islamic psychologists. Private, faith-sensitive care." },
       { property: "og:type", content: "website" },
     ],

@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 
 export const Route = createFileRoute("/settings")({
-  head: () => ({ meta: [{ title: "Settings — KAHF" }] }),
+  head: () => ({ meta: [{ title: "Settings — Kahf" }] }),
   component: SettingsPage,
 });
 
@@ -43,7 +43,7 @@ function SettingsPage() {
 
           <Section title="Privacy">
             <p className="text-sm leading-relaxed text-muted-foreground">
-              Your sessions and journal entries are end-to-end encrypted. KAHF never sells data and only shares information with your therapist when you choose.
+              Your sessions and journal entries are end-to-end encrypted. Kahf never sells data and only shares information with your therapist when you choose.
             </p>
             <div className="mt-4 flex flex-wrap gap-2">
               <Button variant="outline" size="sm" className="rounded-full">Download my data</Button>

@@ -8,9 +8,9 @@ import { GraduationCap, Network, IdCard, BookOpenCheck, BadgeCheck, Mic2, Check,
 export const Route = createFileRoute("/partners/clinical")({
   head: () => ({
     meta: [
-      { title: "Clinical Partnership Program — KAHF" },
+      { title: "Clinical Partnership Program — Kahf" },
       { name: "description", content: "Self-paced, CME/CPD-accredited Islamic mental health training for doctors, GPs, psychiatrists, and counsellors." },
-      { property: "og:title", content: "Clinical Partnership Program — KAHF" },
+      { property: "og:title", content: "Clinical Partnership Program — Kahf" },
       { property: "og:description", content: "Understand your Muslim patients. Deliver better care." },
     ],
   }),
@@ -28,11 +28,11 @@ const TRAINING = [
 
 const BENEFITS = [
   { Icon: GraduationCap, t: "Islamic Mental Health Modules", d: "Self-paced online training covering 6 core topics, CME/CPD accredited." },
-  { Icon: Network, t: "Patient Referral Network", d: "Refer Muslim patients directly to verified KAHF therapists with one link." },
-  { Icon: IdCard, t: "Clinician Profile Page", d: "If you're also a therapist, receive a verified KAHF profile to attract Muslim patients." },
+  { Icon: Network, t: "Patient Referral Network", d: "Refer Muslim patients directly to verified Kahf therapists with one link." },
+  { Icon: IdCard, t: "Clinician Profile Page", d: "If you're also a therapist, receive a verified Kahf profile to attract Muslim patients." },
   { Icon: BookOpenCheck, t: "Research Digest", d: "Quarterly newsletter: Islamic mental health studies, clinical case insights, community data." },
-  { Icon: BadgeCheck, t: "Partner Clinic Badge", d: "Display 'KAHF Culturally Competent Clinic' badge on your website and materials." },
-  { Icon: Mic2, t: "Webinar Collaboration", d: "Co-host a live webinar with a KAHF Islamic psychologist for your patient community." },
+  { Icon: BadgeCheck, t: "Partner Clinic Badge", d: "Display 'Kahf Culturally Competent Clinic' badge on your website and materials." },
+  { Icon: Mic2, t: "Webinar Collaboration", d: "Co-host a live webinar with a Kahf Islamic psychologist for your patient community." },
 ];
 
 const TIERS = [
@@ -62,7 +62,7 @@ function Clinical() {
         <div className="rounded-[16px] border border-border bg-warm p-8 md:p-10">
           <h2 className="font-display text-3xl text-dusk">Your Muslim patients deserve culturally competent care</h2>
           <p className="mt-4 leading-relaxed text-body">
-            Many doctors, GPs, psychiatrists and counsellors treat Muslim patients daily but lack training in Islamic cultural nuances — halal considerations in medication and therapy, family dynamics, faith-based coping, and how to communicate without inadvertently causing distrust. KAHF exists to close that gap.
+            Many doctors, GPs, psychiatrists and counsellors treat Muslim patients daily but lack training in Islamic cultural nuances — halal considerations in medication and therapy, family dynamics, faith-based coping, and how to communicate without inadvertently causing distrust. Kahf exists to close that gap.
           </p>
         </div>
       </section>
@@ -165,7 +165,7 @@ export function ApplicationModal({ kind, onClose }: { kind: "clinical" | "corpor
                 <Field label="Job title" />
                 <Field label="Work email" type="email" />
                 <Select label="Which plan interests you" options={["Starter", "Growth", "Enterprise"]} />
-                <Field label="How did you hear about KAHF" />
+                <Field label="How did you hear about Kahf" />
                 <TextArea label="Anything else you'd like us to know (optional)" max={400} />
               </>
             )}

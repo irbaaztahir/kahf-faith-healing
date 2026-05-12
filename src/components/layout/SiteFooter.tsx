@@ -32,9 +32,9 @@ export function SiteFooter() {
       </div>
       <div className="border-t border-border">
         <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-3 px-6 py-6 text-xs text-cool md:flex-row">
-          <p>© {new Date().getFullYear()} KAHF. Made with care.</p>
+          <p>© {new Date().getFullYear()} Kahf. Made with care.</p>
           <p className="max-w-xl text-center md:text-right">
-            KAHF is not a crisis service. If you are in immediate danger, please contact emergency services.
+            Kahf is not a crisis service. If you are in immediate danger, please contact emergency services.
           </p>
         </div>
       </div>

@@ -8,7 +8,7 @@ import heroPattern from "@/assets/hero-pattern.jpg";
 import { useState } from "react";
 
 export const Route = createFileRoute("/dashboard")({
-  head: () => ({ meta: [{ title: "Your space — KAHF" }] }),
+  head: () => ({ meta: [{ title: "Your space — Kahf" }] }),
   component: Dashboard,
 });
 
