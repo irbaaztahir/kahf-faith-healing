@@ -2,14 +2,20 @@ import { Link, useRouterState } from "@tanstack/react-router";
 import { KahfWordmark } from "@/components/brand/KahfLogo";
 import { Button } from "@/components/ui/button";
 import { useState, useRef } from "react";
-import { Menu, X, Stethoscope, Building2, ChevronDown } from "lucide-react";
+import { Menu, X, Stethoscope, Building2, GraduationCap, Users, ChevronDown } from "lucide-react";
 
 const nav = [
   { to: "/therapists", label: "Therapists" },
-  
-  { to: "/journey", label: "Journey" },
-  { to: "/parents-hub", label: "Kahf\u00A0Parents" },
-  { to: "/gift", label: "Gift" },
+  { to: "/resources", label: "Resources" },
+  { to: "/about", label: "About" },
+  { to: "/blog", label: "Blog" },
+];
+
+const programs = [
+  { to: "/partners/doctor", icon: Stethoscope, label: "Doctor Program", sub: "For clinicians & healthcare providers" },
+  { to: "/partners/corporate", icon: Building2, label: "Corporate Program", sub: "For companies & organizations" },
+  { to: "/programs/student", icon: GraduationCap, label: "Student Program", sub: "For universities & student bodies" },
+  { to: "/programs/family", icon: Users, label: "Family Program", sub: "For families navigating together" },
 ];
 
 export function SiteHeader() {
@@ -42,49 +48,42 @@ export function SiteHeader() {
               {n.label}
             </Link>
           ))}
-          {/* Partner dropdown */}
+          {/* Programs dropdown */}
           <div className="relative" onMouseEnter={handleEnter} onMouseLeave={handleLeave}>
             <button
               onClick={() => setPartnerOpen((v) => !v)}
               className={`flex items-center gap-1 text-sm transition-colors hover:text-dusk ${
-                path.startsWith("/partners") ? "text-dusk font-medium" : "text-cool"
+                path.startsWith("/partners") || path.startsWith("/programs") ? "text-dusk font-medium" : "text-cool"
               }`}
             >
-              Become A Partner <ChevronDown className={`h-3.5 w-3.5 transition-transform ${partnerOpen ? "rotate-180" : ""}`} />
+              Programs <ChevronDown className={`h-3.5 w-3.5 transition-transform ${partnerOpen ? "rotate-180" : ""}`} />
             </button>
             {partnerOpen && (
               <div
-                className="kahf-dropdown absolute left-0 top-full mt-2 w-[260px] rounded-[16px] p-2"
+                className="kahf-dropdown absolute left-0 top-full mt-2 w-[280px] rounded-[16px] p-2"
                 style={{
-                  background: "rgba(255,255,255,0.96)",
+                  background: "rgba(253,250,245,0.97)",
                   backdropFilter: "blur(20px)",
-                  border: "1px solid rgba(201,192,224,0.4)",
-                  boxShadow: "0 20px 60px rgba(58,47,82,0.12), 0 4px 16px rgba(58,47,82,0.06)",
+                  border: "1px solid rgba(201,168,76,0.25)",
+                  boxShadow: "0 12px 40px rgba(13,27,42,0.16)",
                 }}
               >
-                <Link
-                  to="/partners/doctor"
-                  onClick={() => setPartnerOpen(false)}
-                  className="flex items-start gap-3 rounded-[10px] p-3 transition-colors hover:bg-lavender/15"
-                >
-                  <Stethoscope className="mt-0.5 h-5 w-5 shrink-0 text-lavender" />
-                  <div>
-                    <p className="text-sm font-medium text-dusk">Doctor Program</p>
-                    <p className="text-[11px] font-light text-cool">For clinicians & healthcare providers</p>
+                {programs.map((p, i) => (
+                  <div key={p.to}>
+                    {i > 0 && <div className="my-1 h-px" style={{ background: "rgba(13,27,42,0.07)" }} />}
+                    <Link
+                      to={p.to}
+                      onClick={() => setPartnerOpen(false)}
+                      className="flex items-start gap-3 rounded-[10px] p-3 transition-colors hover:bg-cream"
+                    >
+                      <p.icon className="mt-0.5 h-5 w-5 shrink-0 text-deep-teal" />
+                      <div>
+                        <p className="text-sm font-medium text-dusk">{p.label}</p>
+                        <p className="text-[11px] font-light text-cool">{p.sub}</p>
+                      </div>
+                    </Link>
                   </div>
-                </Link>
-                <div className="my-1 h-px" style={{ background: "rgba(201,192,224,0.3)" }} />
-                <Link
-                  to="/partners/corporate"
-                  onClick={() => setPartnerOpen(false)}
-                  className="flex items-start gap-3 rounded-[10px] p-3 transition-colors hover:bg-lavender/15"
-                >
-                  <Building2 className="mt-0.5 h-5 w-5 shrink-0 text-lavender" />
-                  <div>
-                    <p className="text-sm font-medium text-dusk">Corporate Program</p>
-                    <p className="text-[11px] font-light text-cool">For companies & organizations</p>
-                  </div>
-                </Link>
+                ))}
               </div>
             )}
           </div>
@@ -113,13 +112,12 @@ export function SiteHeader() {
                 {n.label}
               </Link>
             ))}
-            <p className="mt-2 px-3 text-[11px] uppercase tracking-[0.2em] text-cool">Become A Partner</p>
-            <Link to="/partners/doctor" onClick={() => setOpen(false)} className="rounded-[10px] px-3 py-3 text-sm text-dusk hover:bg-mist">
-              Doctor Program
-            </Link>
-            <Link to="/partners/corporate" onClick={() => setOpen(false)} className="rounded-[10px] px-3 py-3 text-sm text-dusk hover:bg-mist">
-              Corporate Program
-            </Link>
+            <p className="mt-2 px-3 text-[11px] uppercase tracking-[0.2em] text-cool">Programs</p>
+            {programs.map((p) => (
+              <Link key={p.to} to={p.to} onClick={() => setOpen(false)} className="rounded-[10px] px-3 py-3 text-sm text-dusk hover:bg-mist">
+                {p.label}
+              </Link>
+            ))}
             <div className="mt-2 flex gap-2">
               <Button asChild variant="outline" className="flex-1 rounded-[10px] border-lavender"><Link to="/signin" onClick={() => setOpen(false)}>Sign in</Link></Button>
               <Button asChild className="kahf-btn flex-1 rounded-[10px] bg-gold text-dusk hover:bg-gold/90"><Link to="/quiz" onClick={() => setOpen(false)}>Find your therapist</Link></Button>
