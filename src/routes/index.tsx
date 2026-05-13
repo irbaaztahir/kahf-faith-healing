@@ -48,7 +48,7 @@ function Hero() {
       <div className="absolute inset-0 -z-10 bg-gradient-hero opacity-90" />
       <div className="mx-auto max-w-7xl px-6 pt-24 pb-32 text-center md:pt-32 md:pb-40">
         <Badge className="mb-8 rounded-full border border-border/60 bg-card/70 px-4 py-1.5 text-[11px] font-normal uppercase tracking-[0.25em] text-muted-foreground hover:bg-card/70">
-          A quiet space for Muslim hearts
+          BUILT FOR MUSLIMS, BY MUSLIMS
         </Badge>
         <div className="mb-6 flex justify-center">
           <KahfLogo className="h-[72px] w-auto" />
