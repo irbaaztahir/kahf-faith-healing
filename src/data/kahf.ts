@@ -1,6 +1,9 @@
 import therapist1 from "@/assets/therapist-1.jpg";
 import therapist2 from "@/assets/therapist-2.jpg";
 import therapist3 from "@/assets/therapist-3.jpg";
+import therapist4 from "@/assets/therapist-4.jpg";
+import therapist5 from "@/assets/therapist-5.jpg";
+import therapist6 from "@/assets/therapist-6.jpg";
 
 export type Therapist = {
   id: string;
@@ -76,7 +79,7 @@ export const therapists: Therapist[] = [
     id: "amina-khalid",
     name: "Dr. Amina Khalid",
     credentials: "PhD, Clinical Psychologist",
-    photo: therapist1,
+    photo: therapist4,
     specialties: ["Anxiety", "Depression", "Postpartum"],
     languages: ["English", "Arabic", "Urdu"],
     rating: 4.9,
@@ -94,7 +97,7 @@ export const therapists: Therapist[] = [
     id: "tariq-hussain",
     name: "Ustadh Tariq Hussain",
     credentials: "MA Marriage & Family Therapy",
-    photo: therapist2,
+    photo: therapist5,
     specialties: ["Marriage", "Family", "Co-parenting"],
     languages: ["English", "Urdu", "Punjabi"],
     rating: 5.0,
@@ -112,7 +115,7 @@ export const therapists: Therapist[] = [
     id: "fatima-alrashid",
     name: "Dr. Fatima Al-Rashid",
     credentials: "PsyD, EMDR Certified",
-    photo: therapist3,
+    photo: therapist6,
     specialties: ["Grief", "Trauma", "Bereavement"],
     languages: ["English", "Arabic", "French"],
     rating: 4.9,
