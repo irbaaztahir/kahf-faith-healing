@@ -1,6 +1,9 @@
 import therapist1 from "@/assets/therapist-1.jpg";
 import therapist2 from "@/assets/therapist-2.jpg";
 import therapist3 from "@/assets/therapist-3.jpg";
+import therapist4 from "@/assets/therapist-4.jpg";
+import therapist5 from "@/assets/therapist-5.jpg";
+import therapist6 from "@/assets/therapist-6.jpg";
 
 export type Therapist = {
   id: string;
