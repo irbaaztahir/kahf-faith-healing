@@ -226,7 +226,7 @@
 
 @layer utilities {
   /* Page transitions */
-  .kahf-page { animation: kahf-page-in 320ms ease-out both; }
+  .kahf-page { /* page transition animation removed for snappier nav */ }
 
   /* Stagger (children animate one after another) */
   .kahf-stagger > * { animation: kahf-stagger-in 280ms ease-out both; }
