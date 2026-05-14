@@ -79,7 +79,7 @@ export const therapists: Therapist[] = [
     id: "amina-khalid",
     name: "Dr. Amina Khalid",
     credentials: "PhD, Clinical Psychologist",
-    photo: therapist1,
+    photo: therapist4,
     specialties: ["Anxiety", "Depression", "Postpartum"],
     languages: ["English", "Arabic", "Urdu"],
     rating: 4.9,
