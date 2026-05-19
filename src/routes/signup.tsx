@@ -34,7 +34,7 @@ function SignupPage() {
       return;
     }
     setLoading(true);
-    const { error } = await supabase.auth.signUp({
+    const { data, error } = await supabase.auth.signUp({
       email,
       password,
       options: {
@@ -42,13 +42,19 @@ function SignupPage() {
         data: { display_name: fullName, full_name: fullName },
       },
     });
-    setLoading(false);
     if (error) {
+      setLoading(false);
       toast.error(error.message);
       return;
     }
-    toast.success("Account created. Check your email to verify.");
-    navigate({ to: "/signin" });
+    if (data.session) {
+      toast.success("Welcome to Kahf");
+      navigate({ to: "/dashboard" });
+    } else {
+      setLoading(false);
+      toast.success("Account created. Check your email to verify.");
+      navigate({ to: "/signin" });
+    }
   };
 
   return (
