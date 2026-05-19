@@ -18,6 +18,8 @@ function SignupPage() {
   const [show1, setShow1] = useState(false);
   const [show2, setShow2] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [formError, setFormError] = useState("");
+  const [statusMessage, setStatusMessage] = useState("");
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -25,35 +27,66 @@ function SignupPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setFormError("");
+    setStatusMessage("");
+
+    const trimmedName = fullName.trim();
+    const normalizedEmail = email.trim().toLowerCase();
+
+    if (!trimmedName) {
+      setFormError("Please enter your full name.");
+      return;
+    }
     if (password !== confirm) {
-      toast.error("Passwords don't match");
+      setFormError("Passwords don't match.");
       return;
     }
     if (password.length < 6) {
-      toast.error("Password must be at least 6 characters");
+      setFormError("Password must be at least 6 characters.");
       return;
     }
+
     setLoading(true);
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: `${window.location.origin}/dashboard`,
-        data: { display_name: fullName, full_name: fullName },
-      },
-    });
-    if (error) {
-      setLoading(false);
-      toast.error(error.message);
-      return;
-    }
-    if (data.session) {
+    setStatusMessage("Creating your account…");
+
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email: normalizedEmail,
+        password,
+        options: {
+          emailRedirectTo: `${window.location.origin}/dashboard`,
+          data: { display_name: trimmedName, full_name: trimmedName },
+        },
+      });
+
+      if (error) throw error;
+
+      let activeSession = data.session;
+
+      if (!activeSession && data.user) {
+        setStatusMessage("Account created. Signing you in…");
+        const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
+          email: normalizedEmail,
+          password,
+        });
+        if (signInError) throw signInError;
+        activeSession = signInData.session;
+      }
+
+      if (!activeSession) {
+        throw new Error("Account created, but we couldn't start your session. Please sign in.");
+      }
+
+      setStatusMessage("Redirecting to your dashboard…");
       toast.success("Welcome to Kahf");
-      navigate({ to: "/dashboard" });
-    } else {
+      await navigate({ to: "/dashboard" });
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Unable to create your account. Please try again.";
+      setFormError(message);
+      toast.error(message);
+    } finally {
       setLoading(false);
-      toast.success("Account created. Check your email to verify.");
-      navigate({ to: "/signin" });
+      setStatusMessage("");
     }
   };
 
@@ -91,6 +124,17 @@ function SignupPage() {
             <input type="checkbox" required className="mt-0.5 h-4 w-4 accent-lavender" />
             <span>I understand my data is private and encrypted</span>
           </label>
+
+          {formError && (
+            <div role="alert" className="rounded-[10px] border border-destructive/40 bg-destructive/10 px-4 py-3 text-[13px] leading-relaxed text-destructive">
+              {formError}
+            </div>
+          )}
+          {statusMessage && !formError && (
+            <div role="status" className="rounded-[10px] border border-lavender bg-lavender/10 px-4 py-3 text-[13px] leading-relaxed text-dusk">
+              {statusMessage}
+            </div>
+          )}
 
           <Button disabled={loading} type="submit" className="kahf-btn mt-3 h-12 w-full rounded-[12px] bg-gold text-[15px] font-medium text-dusk hover:bg-gold/90">
             {loading ? "Creating account…" : "Create My Account"}
