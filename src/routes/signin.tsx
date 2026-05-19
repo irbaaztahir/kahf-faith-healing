@@ -1,9 +1,11 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { KahfLogo } from "@/components/brand/KahfLogo";
 import { Eye, EyeOff } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 import { Divider, SocialButtons } from "./signup";
 
 export const Route = createFileRoute("/signin")({
@@ -12,7 +14,24 @@ export const Route = createFileRoute("/signin")({
 });
 
 function SignInPage() {
+  const navigate = useNavigate();
   const [show, setShow] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    setLoading(false);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+    toast.success("Welcome back");
+    navigate({ to: "/dashboard" });
+  };
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-mist px-4 py-12">
@@ -26,15 +45,15 @@ function SignInPage() {
           <p className="mt-2 text-[13px] text-cool">Your sanctuary is waiting.</p>
         </div>
 
-        <form className="mt-8 space-y-4" onSubmit={(e) => e.preventDefault()}>
+        <form className="mt-8 space-y-4" onSubmit={handleSubmit}>
           <div>
             <label className="mb-2 block text-[12px] font-medium text-dusk">Email address</label>
-            <Input required type="email" placeholder="your@email.com" className="h-12 rounded-[10px] border-lavender bg-warm" />
+            <Input required type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="your@email.com" className="h-12 rounded-[10px] border-lavender bg-warm" />
           </div>
           <div>
             <label className="mb-2 block text-[12px] font-medium text-dusk">Password</label>
             <div className="relative">
-              <Input required type={show ? "text" : "password"} placeholder="Your password" className="h-12 rounded-[10px] border-lavender bg-warm pr-12" />
+              <Input required type={show ? "text" : "password"} value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Your password" className="h-12 rounded-[10px] border-lavender bg-warm pr-12" />
               <button type="button" onClick={() => setShow(!show)} className="absolute right-3 top-1/2 -translate-y-1/2 p-2 text-cool transition-colors hover:text-dusk">
                 {show ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
               </button>
@@ -48,8 +67,8 @@ function SignInPage() {
             <Link to="/forgot-password" className="text-[12px] text-dusk underline">Forgot password?</Link>
           </div>
 
-          <Button type="submit" className="kahf-btn mt-3 h-12 w-full rounded-[12px] bg-gold text-[15px] font-medium text-dusk hover:bg-gold/90">
-            Sign In
+          <Button disabled={loading} type="submit" className="kahf-btn mt-3 h-12 w-full rounded-[12px] bg-gold text-[15px] font-medium text-dusk hover:bg-gold/90">
+            {loading ? "Signing in…" : "Sign In"}
           </Button>
         </form>
 

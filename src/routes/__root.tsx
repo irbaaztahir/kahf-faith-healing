@@ -2,6 +2,7 @@ import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/r
 import { PageTransition } from "@/components/layout/PageTransition";
 import { CompanionFab } from "@/components/companion/CompanionFab";
 import { SignupPopup } from "@/components/SignupPopup";
+import { Toaster } from "@/components/ui/sonner";
 
 
 import appCss from "../styles.css?url";
@@ -74,6 +75,7 @@ function RootComponent() {
       </PageTransition>
       <CompanionFab />
       <SignupPopup />
+      <Toaster />
     </>
   );
 }
