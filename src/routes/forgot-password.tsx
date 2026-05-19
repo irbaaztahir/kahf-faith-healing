@@ -1,9 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { KahfLogo } from "@/components/brand/KahfLogo";
 import { Check } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/forgot-password")({
   head: () => ({ meta: [{ title: "Reset your password — Kahf" }] }),
@@ -12,6 +14,22 @@ export const Route = createFileRoute("/forgot-password")({
 
 function ForgotPage() {
   const [sent, setSent] = useState(false);
+  const [email, setEmail] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/reset-password`,
+    });
+    setLoading(false);
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+    setSent(true);
+  };
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-mist px-4 py-12">
@@ -38,13 +56,13 @@ function ForgotPage() {
         </div>
 
         {!sent && (
-          <form className="mt-8 space-y-4" onSubmit={(e) => { e.preventDefault(); setSent(true); }}>
+          <form className="mt-8 space-y-4" onSubmit={handleSubmit}>
             <div>
               <label className="mb-2 block text-[12px] font-medium text-dusk">Email address</label>
-              <Input required type="email" placeholder="your@email.com" className="h-12 rounded-[10px] border-lavender bg-warm" />
+              <Input required type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="your@email.com" className="h-12 rounded-[10px] border-lavender bg-warm" />
             </div>
-            <Button type="submit" className="kahf-btn h-12 w-full rounded-[12px] bg-gold text-[15px] font-medium text-dusk hover:bg-gold/90">
-              Send Reset Link
+            <Button disabled={loading} type="submit" className="kahf-btn h-12 w-full rounded-[12px] bg-gold text-[15px] font-medium text-dusk hover:bg-gold/90">
+              {loading ? "Sending…" : "Send Reset Link"}
             </Button>
           </form>
         )}
