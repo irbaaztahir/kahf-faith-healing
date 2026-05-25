@@ -13,6 +13,20 @@ export const Route = createFileRoute("/signup")({
   component: SignupPage,
 });
 
+async function withTimeout<T>(promise: Promise<T>, message: string, timeoutMs = 15000): Promise<T> {
+  let timeoutId: ReturnType<typeof setTimeout> | undefined;
+
+  const timeout = new Promise<never>((_, reject) => {
+    timeoutId = setTimeout(() => reject(new Error(message)), timeoutMs);
+  });
+
+  try {
+    return await Promise.race([promise, timeout]);
+  } finally {
+    if (timeoutId) clearTimeout(timeoutId);
+  }
+}
+
 function SignupPage() {
   const navigate = useNavigate();
   const [show1, setShow1] = useState(false);
@@ -27,6 +41,8 @@ function SignupPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (loading) return;
+
     setFormError("");
     setStatusMessage("");
 
@@ -35,6 +51,10 @@ function SignupPage() {
 
     if (!trimmedName) {
       setFormError("Please enter your full name.");
+      return;
+    }
+    if (!normalizedEmail) {
+      setFormError("Please enter your email address.");
       return;
     }
     if (password !== confirm) {
@@ -50,14 +70,17 @@ function SignupPage() {
     setStatusMessage("Creating your account…");
 
     try {
-      const { data, error } = await supabase.auth.signUp({
-        email: normalizedEmail,
-        password,
-        options: {
-          emailRedirectTo: `${window.location.origin}/dashboard`,
-          data: { display_name: trimmedName, full_name: trimmedName },
-        },
-      });
+      const { data, error } = await withTimeout(
+        supabase.auth.signUp({
+          email: normalizedEmail,
+          password,
+          options: {
+            emailRedirectTo: `${window.location.origin}/dashboard`,
+            data: { display_name: trimmedName, full_name: trimmedName },
+          },
+        }),
+        "Creating your account took too long. Please check your connection and try again.",
+      );
 
       if (error) throw error;
 
@@ -65,10 +88,13 @@ function SignupPage() {
 
       if (!activeSession && data.user) {
         setStatusMessage("Account created. Signing you in…");
-        const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
-          email: normalizedEmail,
-          password,
-        });
+        const { data: signInData, error: signInError } = await withTimeout(
+          supabase.auth.signInWithPassword({
+            email: normalizedEmail,
+            password,
+          }),
+          "Your account was created, but sign-in took too long. Please try signing in.",
+        );
         if (signInError) throw signInError;
         activeSession = signInData.session;
       }
@@ -79,7 +105,7 @@ function SignupPage() {
 
       setStatusMessage("Redirecting to your dashboard…");
       toast.success("Welcome to Kahf");
-      await navigate({ to: "/dashboard" });
+      await navigate({ to: "/dashboard", replace: true });
     } catch (err) {
       const message = err instanceof Error ? err.message : "Unable to create your account. Please try again.";
       setFormError(message);
@@ -104,10 +130,10 @@ function SignupPage() {
 
         <form className="mt-8 space-y-4" onSubmit={handleSubmit}>
           <FieldLabel label="Full name">
-            <Input required value={fullName} onChange={(e) => setFullName(e.target.value)} placeholder="Your full name" className="h-12 rounded-[10px] border-lavender bg-warm" />
+            <Input required autoComplete="name" value={fullName} onChange={(e) => setFullName(e.target.value)} placeholder="Your full name" className="h-12 rounded-[10px] border-lavender bg-warm" />
           </FieldLabel>
           <FieldLabel label="Email address">
-            <Input required type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="your@email.com" className="h-12 rounded-[10px] border-lavender bg-warm" />
+            <Input required type="email" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="your@email.com" className="h-12 rounded-[10px] border-lavender bg-warm" />
           </FieldLabel>
           <FieldLabel label="Password">
             <PasswordField value={password} onChange={setPassword} show={show1} onToggle={() => setShow1(!show1)} placeholder="Create a password" />
