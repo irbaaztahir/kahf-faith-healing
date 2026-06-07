@@ -17,6 +17,8 @@ export const Route = createFileRoute("/therapist-portal")({
   component: TherapistPortal,
 });
 
+type Sess = { id: string; scheduled_at: string; status: string; kind: string; price: number | null };
+
 function TherapistPortal() {
   const { user, loading: authLoading } = useAuth();
   const { role, loading: roleLoading } = useProfileRole();
@@ -24,6 +26,7 @@ function TherapistPortal() {
   const [bio, setBio] = useState("");
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [sessions, setSessions] = useState<Sess[]>([]);
 
   useEffect(() => {
     if (!user) {
@@ -32,14 +35,14 @@ function TherapistPortal() {
     }
     let cancelled = false;
     (async () => {
-      const { data } = await supabase
-        .from("profiles")
-        .select("display_name, bio")
-        .eq("id", user.id)
-        .maybeSingle();
+      const [profileRes, sessionsRes] = await Promise.all([
+        supabase.from("profiles").select("display_name, bio").eq("id", user.id).maybeSingle(),
+        supabase.from("sessions").select("id, scheduled_at, status, kind, price").eq("therapist_id", user.id).order("scheduled_at", { ascending: true }),
+      ]);
       if (cancelled) return;
-      setDisplayName(data?.display_name ?? "");
-      setBio(data?.bio ?? "");
+      setDisplayName(profileRes.data?.display_name ?? "");
+      setBio(profileRes.data?.bio ?? "");
+      setSessions((sessionsRes.data ?? []) as Sess[]);
       setLoading(false);
     })();
     return () => {
@@ -67,6 +70,16 @@ function TherapistPortal() {
     else toast.success("Profile saved");
   };
 
+  const now = Date.now();
+  const weekStart = now - 7 * 86400000;
+  const monthStart = now - 30 * 86400000;
+  const thisWeek = sessions.filter((s) => new Date(s.scheduled_at).getTime() >= weekStart && s.status !== "cancelled").length;
+  const activeClients = sessions.filter((s) => s.status !== "cancelled").length;
+  const monthEarnings = sessions
+    .filter((s) => new Date(s.scheduled_at).getTime() >= monthStart && s.status === "completed")
+    .reduce((sum, s) => sum + (Number(s.price) || 0), 0);
+  const upcoming = sessions.filter((s) => new Date(s.scheduled_at).getTime() >= now && s.status === "confirmed");
+
   return (
     <div className="min-h-screen bg-background">
       <SiteHeader />
@@ -84,9 +97,9 @@ function TherapistPortal() {
         </div>
 
         <div className="mt-10 grid gap-4 sm:grid-cols-4">
-          <Stat icon={Calendar} label="This week" value="—" />
-          <Stat icon={Users} label="Active patients" value="—" />
-          <Stat icon={DollarSign} label="This month" value="—" />
+          <Stat icon={Calendar} label="This week" value={loading ? "—" : String(thisWeek)} />
+          <Stat icon={Users} label="Sessions booked" value={loading ? "—" : String(activeClients)} />
+          <Stat icon={DollarSign} label="This month" value={loading ? "—" : `$${monthEarnings.toFixed(0)}`} />
           <Stat icon={ShieldCheck} label="Rating" value="—" />
         </div>
 
@@ -94,7 +107,20 @@ function TherapistPortal() {
           <Card className="rounded-2xl border-border/60 bg-card shadow-soft lg:col-span-2">
             <CardContent className="p-6">
               <h2 className="font-display text-2xl text-foreground">Upcoming sessions</h2>
-              <p className="mt-4 text-sm text-muted-foreground">No upcoming sessions yet.</p>
+              {loading ? (
+                <p className="mt-4 text-sm text-muted-foreground">Loading…</p>
+              ) : upcoming.length === 0 ? (
+                <p className="mt-4 text-sm text-muted-foreground">No upcoming sessions yet.</p>
+              ) : (
+                <ul className="mt-4 space-y-3">
+                  {upcoming.map((s) => (
+                    <li key={s.id} className="flex items-center justify-between rounded-xl border border-border/60 bg-background px-4 py-3 text-sm">
+                      <span className="text-foreground">{new Date(s.scheduled_at).toLocaleString(undefined, { weekday: "short", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" })}</span>
+                      <span className="text-xs uppercase tracking-wider text-muted-foreground">{s.kind}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </CardContent>
           </Card>
 
