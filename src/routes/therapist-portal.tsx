@@ -47,8 +47,10 @@ function TherapistPortal() {
     };
   }, [user]);
 
-  if (authLoading) return null;
+  if (authLoading || roleLoading) return null;
   if (!user) return <Navigate to="/signin" />;
+  if (!role) return <Navigate to="/welcome" />;
+  if (role !== "therapist") return <Navigate to="/client" />;
 
   const firstName = displayName ? displayName.split(" ")[0] : "";
 
