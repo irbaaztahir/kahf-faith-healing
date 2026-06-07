@@ -35,6 +35,7 @@ import { Route as PartnersCorporateRouteImport } from './routes/partners.corpora
 import { Route as PartnersClinicalRouteImport } from './routes/partners.clinical'
 import { Route as BookingIdRouteImport } from './routes/booking.$id'
 import { Route as ApiCompanionChatRouteImport } from './routes/api/companion-chat'
+import { Route as ApiPublicMirrorProfileRouteImport } from './routes/api/public/mirror-profile'
 
 const WelcomeRoute = WelcomeRouteImport.update({
   id: '/welcome',
@@ -166,6 +167,11 @@ const ApiCompanionChatRoute = ApiCompanionChatRouteImport.update({
   path: '/api/companion-chat',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicMirrorProfileRoute = ApiPublicMirrorProfileRouteImport.update({
+  id: '/api/public/mirror-profile',
+  path: '/api/public/mirror-profile',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -194,6 +200,7 @@ export interface FileRoutesByFullPath {
   '/partners/doctor': typeof PartnersDoctorRoute
   '/therapists/$id': typeof TherapistsIdRoute
   '/therapists/': typeof TherapistsIndexRoute
+  '/api/public/mirror-profile': typeof ApiPublicMirrorProfileRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -222,6 +229,7 @@ export interface FileRoutesByTo {
   '/partners/doctor': typeof PartnersDoctorRoute
   '/therapists/$id': typeof TherapistsIdRoute
   '/therapists': typeof TherapistsIndexRoute
+  '/api/public/mirror-profile': typeof ApiPublicMirrorProfileRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -251,6 +259,7 @@ export interface FileRoutesById {
   '/partners/doctor': typeof PartnersDoctorRoute
   '/therapists/$id': typeof TherapistsIdRoute
   '/therapists/': typeof TherapistsIndexRoute
+  '/api/public/mirror-profile': typeof ApiPublicMirrorProfileRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -281,6 +290,7 @@ export interface FileRouteTypes {
     | '/partners/doctor'
     | '/therapists/$id'
     | '/therapists/'
+    | '/api/public/mirror-profile'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -309,6 +319,7 @@ export interface FileRouteTypes {
     | '/partners/doctor'
     | '/therapists/$id'
     | '/therapists'
+    | '/api/public/mirror-profile'
   id:
     | '__root__'
     | '/'
@@ -337,6 +348,7 @@ export interface FileRouteTypes {
     | '/partners/doctor'
     | '/therapists/$id'
     | '/therapists/'
+    | '/api/public/mirror-profile'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -363,6 +375,7 @@ export interface RootRouteChildren {
   BookingIdRoute: typeof BookingIdRoute
   TherapistsIdRoute: typeof TherapistsIdRoute
   TherapistsIndexRoute: typeof TherapistsIndexRoute
+  ApiPublicMirrorProfileRoute: typeof ApiPublicMirrorProfileRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -549,6 +562,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiCompanionChatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/mirror-profile': {
+      id: '/api/public/mirror-profile'
+      path: '/api/public/mirror-profile'
+      fullPath: '/api/public/mirror-profile'
+      preLoaderRoute: typeof ApiPublicMirrorProfileRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -592,16 +612,8 @@ const rootRouteChildren: RootRouteChildren = {
   BookingIdRoute: BookingIdRoute,
   TherapistsIdRoute: TherapistsIdRoute,
   TherapistsIndexRoute: TherapistsIndexRoute,
+  ApiPublicMirrorProfileRoute: ApiPublicMirrorProfileRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-  }
-}
