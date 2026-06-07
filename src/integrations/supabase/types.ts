@@ -21,7 +21,12 @@ export type Database = {
           created_at: string
           display_name: string | null
           id: string
+          license: string | null
+          looking_for: string | null
+          role: string | null
+          specializations: string[] | null
           updated_at: string
+          years_experience: number | null
         }
         Insert: {
           avatar_url?: string | null
@@ -29,7 +34,12 @@ export type Database = {
           created_at?: string
           display_name?: string | null
           id: string
+          license?: string | null
+          looking_for?: string | null
+          role?: string | null
+          specializations?: string[] | null
           updated_at?: string
+          years_experience?: number | null
         }
         Update: {
           avatar_url?: string | null
@@ -37,7 +47,12 @@ export type Database = {
           created_at?: string
           display_name?: string | null
           id?: string
+          license?: string | null
+          looking_for?: string | null
+          role?: string | null
+          specializations?: string[] | null
           updated_at?: string
+          years_experience?: number | null
         }
         Relationships: []
       }
