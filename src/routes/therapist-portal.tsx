@@ -147,11 +147,3 @@ function Stat({ icon: Icon, label, value }: { icon: typeof Calendar; label: stri
   );
 }
 
-function Field({ label, defaultValue }: { label: string; defaultValue: string }) {
-  return (
-    <div>
-      <label className="mb-2 block text-xs uppercase tracking-[0.2em] text-muted-foreground">{label}</label>
-      <Input defaultValue={defaultValue} className="h-11 rounded-xl border-border bg-background" />
-    </div>
-  );
-}
