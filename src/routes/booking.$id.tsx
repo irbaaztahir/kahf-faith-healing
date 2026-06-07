@@ -1,4 +1,4 @@
-import { createFileRoute, Link, Navigate, notFound, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Navigate, notFound, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { Button } from "@/components/ui/button";
