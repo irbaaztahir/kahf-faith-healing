@@ -149,8 +149,8 @@ function BookingPage() {
                   Payment is processed securely via Stripe. You won't be charged until the session is confirmed.
                 </div>
               )}
-              <Button onClick={() => setStep(3)} className="mt-8 h-12 w-full rounded-full bg-dusk text-mist hover:bg-dusk/90">
-                {kind === "consult" ? "Confirm booking" : `Pay $${therapist.price} & confirm`}
+              <Button onClick={confirmBooking} disabled={saving} className="mt-8 h-12 w-full rounded-full bg-dusk text-mist hover:bg-dusk/90">
+                {saving ? "Confirming…" : kind === "consult" ? "Confirm booking" : `Pay $${therapist.price} & confirm`}
               </Button>
             </CardContent>
           </Card>
