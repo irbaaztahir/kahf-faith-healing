@@ -1,12 +1,15 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import { KahfLogo } from "@/components/brand/KahfLogo";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, ArrowLeft } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable/index";
+
+type SignupRole = "client" | "therapist";
 
 export const Route = createFileRoute("/signup")({
   head: () => ({ meta: [{ title: "Create your account — Kahf" }] }),
@@ -15,11 +18,9 @@ export const Route = createFileRoute("/signup")({
 
 async function withTimeout<T>(promise: Promise<T>, message: string, timeoutMs = 15000): Promise<T> {
   let timeoutId: ReturnType<typeof setTimeout> | undefined;
-
   const timeout = new Promise<never>((_, reject) => {
     timeoutId = setTimeout(() => reject(new Error(message)), timeoutMs);
   });
-
   try {
     return await Promise.race([promise, timeout]);
   } finally {
@@ -27,17 +28,53 @@ async function withTimeout<T>(promise: Promise<T>, message: string, timeoutMs = 
   }
 }
 
+function readInitialRole(): SignupRole | null {
+  if (typeof window === "undefined") return null;
+  const params = new URLSearchParams(window.location.search);
+  const fromUrl = params.get("role");
+  if (fromUrl === "client" || fromUrl === "therapist") return fromUrl;
+  try {
+    const stored = sessionStorage.getItem("kahf:signup-role");
+    if (stored === "client" || stored === "therapist") return stored;
+  } catch {
+    /* ignore */
+  }
+  return null;
+}
+
 function SignupPage() {
   const navigate = useNavigate();
+  const [role, setRole] = useState<SignupRole | null>(null);
   const [show1, setShow1] = useState(false);
   const [show2, setShow2] = useState(false);
   const [loading, setLoading] = useState(false);
   const [formError, setFormError] = useState("");
   const [statusMessage, setStatusMessage] = useState("");
+
+  // form fields
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
+  // client extras
+  const [lookingFor, setLookingFor] = useState("");
+  // therapist extras
+  const [license, setLicense] = useState("");
+  const [yearsExperience, setYearsExperience] = useState("");
+  const [specializations, setSpecializations] = useState("");
+
+  useEffect(() => {
+    const r = readInitialRole();
+    if (!r) {
+      navigate({ to: "/welcome", replace: true });
+      return;
+    }
+    setRole(r);
+  }, [navigate]);
+
+  if (!role) return null;
+
+  const isTherapist = role === "therapist";
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -49,63 +86,95 @@ function SignupPage() {
     const trimmedName = fullName.trim();
     const normalizedEmail = email.trim().toLowerCase();
 
-    if (!trimmedName) {
-      setFormError("Please enter your full name.");
-      return;
+    if (!trimmedName) return setFormError("Please enter your full name.");
+    if (!normalizedEmail) return setFormError("Please enter your email address.");
+    if (password !== confirm) return setFormError("Passwords don't match.");
+    if (password.length < 6) return setFormError("Password must be at least 6 characters.");
+
+    if (isTherapist) {
+      if (!license.trim()) return setFormError("Please enter your professional license or qualification.");
+      if (!yearsExperience.trim() || Number.isNaN(Number(yearsExperience))) {
+        return setFormError("Please enter your years of experience as a number.");
+      }
+      if (!specializations.trim()) return setFormError("Please list at least one specialization.");
     }
-    if (!normalizedEmail) {
-      setFormError("Please enter your email address.");
-      return;
-    }
-    if (password !== confirm) {
-      setFormError("Passwords don't match.");
-      return;
-    }
-    if (password.length < 6) {
-      setFormError("Password must be at least 6 characters.");
-      return;
-    }
+
+    const specArr = specializations
+      .split(",")
+      .map((s) => s.trim())
+      .filter(Boolean);
 
     setLoading(true);
     setStatusMessage("Creating your account…");
 
     try {
+      const metaData: Record<string, unknown> = {
+        display_name: trimmedName,
+        full_name: trimmedName,
+        role,
+      };
+      if (isTherapist) {
+        metaData.license = license.trim();
+        metaData.years_experience = yearsExperience.trim();
+        metaData.specializations = specArr;
+      } else if (lookingFor.trim()) {
+        metaData.looking_for = lookingFor.trim();
+      }
+
       const { data, error } = await withTimeout(
         supabase.auth.signUp({
           email: normalizedEmail,
           password,
           options: {
             emailRedirectTo: `${window.location.origin}/dashboard`,
-            data: { display_name: trimmedName, full_name: trimmedName },
+            data: metaData,
           },
         }),
         "Creating your account took too long. Please check your connection and try again.",
       );
-
       if (error) throw error;
 
       let activeSession = data.session;
-
       if (!activeSession && data.user) {
         setStatusMessage("Account created. Signing you in…");
         const { data: signInData, error: signInError } = await withTimeout(
-          supabase.auth.signInWithPassword({
-            email: normalizedEmail,
-            password,
-          }),
+          supabase.auth.signInWithPassword({ email: normalizedEmail, password }),
           "Your account was created, but sign-in took too long. Please try signing in.",
         );
         if (signInError) throw signInError;
         activeSession = signInData.session;
       }
-
       if (!activeSession) {
         throw new Error("Account created, but we couldn't start your session. Please sign in.");
       }
 
-      setStatusMessage("Redirecting to your dashboard…");
+      // Make sure role + extra fields are saved (in case the trigger raced)
+      const userId = activeSession.user.id;
+      await supabase.from("profiles").upsert(
+        {
+          id: userId,
+          display_name: trimmedName,
+          role,
+          ...(isTherapist
+            ? {
+                license: license.trim(),
+                years_experience: Number(yearsExperience),
+                specializations: specArr,
+              }
+            : { looking_for: lookingFor.trim() || null }),
+        },
+        { onConflict: "id" },
+      );
+
+      try {
+        sessionStorage.removeItem("kahf:signup-role");
+      } catch {
+        /* ignore */
+      }
+
+      setStatusMessage("Redirecting…");
       toast.success("Welcome to Kahf");
-      await navigate({ to: "/dashboard", replace: true });
+      await navigate({ to: isTherapist ? "/therapist" : "/client", replace: true });
     } catch (err) {
       const message = err instanceof Error ? err.message : "Unable to create your account. Please try again.";
       setFormError(message);
@@ -119,13 +188,26 @@ function SignupPage() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-mist px-4 py-12">
       <div
-        className="w-full max-w-[440px] rounded-[20px] bg-warm p-10 kahf-modal-content"
+        className="w-full max-w-[480px] rounded-[20px] bg-warm p-10 kahf-modal-content"
         style={{ border: "1px solid rgba(201,192,224,0.35)", boxShadow: "0 20px 60px rgba(58,47,82,0.1)" }}
       >
+        <button
+          type="button"
+          onClick={() => navigate({ to: "/welcome" })}
+          className="mb-4 inline-flex items-center gap-1 text-[12px] text-cool transition-colors hover:text-dusk"
+        >
+          <ArrowLeft className="h-3.5 w-3.5" /> Change role
+        </button>
         <div className="flex flex-col items-center text-center">
           <KahfLogo className="h-12 w-auto" />
-          <h2 className="mt-5 font-display text-3xl text-dusk">Create your sanctuary</h2>
-          <p className="mt-2 text-[13px] text-cool">Your healing journey begins here. Completely private.</p>
+          <h2 className="mt-5 font-display text-3xl text-dusk">
+            {isTherapist ? "Join as a Therapist" : "Create your sanctuary"}
+          </h2>
+          <p className="mt-2 text-[13px] text-cool">
+            {isTherapist
+              ? "Tell us a little about your practice."
+              : "Your healing journey begins here. Completely private."}
+          </p>
         </div>
 
         <form className="mt-8 space-y-4" onSubmit={handleSubmit}>
@@ -142,13 +224,27 @@ function SignupPage() {
             <PasswordField value={confirm} onChange={setConfirm} show={show2} onToggle={() => setShow2(!show2)} placeholder="Confirm your password" />
           </FieldLabel>
 
+          {isTherapist ? (
+            <>
+              <FieldLabel label="Professional license or qualification">
+                <Input required value={license} onChange={(e) => setLicense(e.target.value)} placeholder="e.g. LCSW #12345, PhD Clinical Psych" className="h-12 rounded-[10px] border-lavender bg-warm" />
+              </FieldLabel>
+              <FieldLabel label="Years of experience">
+                <Input required type="number" min={0} value={yearsExperience} onChange={(e) => setYearsExperience(e.target.value)} placeholder="e.g. 5" className="h-12 rounded-[10px] border-lavender bg-warm" />
+              </FieldLabel>
+              <FieldLabel label="Specializations (comma separated)">
+                <Input required value={specializations} onChange={(e) => setSpecializations(e.target.value)} placeholder="Anxiety, Marriage, Trauma" className="h-12 rounded-[10px] border-lavender bg-warm" />
+              </FieldLabel>
+            </>
+          ) : (
+            <FieldLabel label="What are you looking for help with? (optional)">
+              <Textarea value={lookingFor} onChange={(e) => setLookingFor(e.target.value)} placeholder="Share as much or as little as you'd like…" className="min-h-[88px] rounded-[10px] border-lavender bg-warm" />
+            </FieldLabel>
+          )}
+
           <label className="flex items-start gap-2 pt-2 text-[12px] text-cool">
             <input type="checkbox" required className="mt-0.5 h-4 w-4 accent-lavender" />
             <span>I agree to Kahf's <a className="text-dusk underline">Terms of Service</a> and <a className="text-dusk underline">Privacy Policy</a></span>
-          </label>
-          <label className="flex items-start gap-2 text-[12px] text-cool">
-            <input type="checkbox" required className="mt-0.5 h-4 w-4 accent-lavender" />
-            <span>I understand my data is private and encrypted</span>
           </label>
 
           {formError && (
@@ -163,12 +259,16 @@ function SignupPage() {
           )}
 
           <Button disabled={loading} type="submit" className="kahf-btn mt-3 h-12 w-full rounded-[12px] bg-gold text-[15px] font-medium text-dusk hover:bg-gold/90">
-            {loading ? "Creating account…" : "Create My Account"}
+            {loading ? "Creating account…" : isTherapist ? "Create Therapist Account" : "Create My Account"}
           </Button>
         </form>
 
-        <Divider />
-        <SocialButtons />
+        {!isTherapist && (
+          <>
+            <Divider />
+            <SocialButtons />
+          </>
+        )}
 
         <p className="mt-7 text-center text-[13px] text-cool">
           Already have an account? <Link to="/signin" className="text-dusk underline">Sign in</Link>

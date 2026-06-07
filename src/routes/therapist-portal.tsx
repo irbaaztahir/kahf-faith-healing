@@ -8,6 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { ShieldCheck, DollarSign, Calendar, Users } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useAuth } from "@/hooks/use-auth";
+import { useProfileRole } from "@/hooks/use-profile-role";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
@@ -18,6 +19,7 @@ export const Route = createFileRoute("/therapist-portal")({
 
 function TherapistPortal() {
   const { user, loading: authLoading } = useAuth();
+  const { role, loading: roleLoading } = useProfileRole();
   const [displayName, setDisplayName] = useState("");
   const [bio, setBio] = useState("");
   const [loading, setLoading] = useState(true);
@@ -45,8 +47,10 @@ function TherapistPortal() {
     };
   }, [user]);
 
-  if (authLoading) return null;
+  if (authLoading || roleLoading) return null;
   if (!user) return <Navigate to="/signin" />;
+  if (!role) return <Navigate to="/welcome" />;
+  if (role !== "therapist") return <Navigate to="/client" />;
 
   const firstName = displayName ? displayName.split(" ")[0] : "";
 
