@@ -19,6 +19,7 @@ export const Route = createFileRoute("/therapist-portal")({
 
 function TherapistPortal() {
   const { user, loading: authLoading } = useAuth();
+  const { role, loading: roleLoading } = useProfileRole();
   const [displayName, setDisplayName] = useState("");
   const [bio, setBio] = useState("");
   const [loading, setLoading] = useState(true);
