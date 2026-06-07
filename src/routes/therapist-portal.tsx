@@ -8,6 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { ShieldCheck, DollarSign, Calendar, Users } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useAuth } from "@/hooks/use-auth";
+import { useProfileRole } from "@/hooks/use-profile-role";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 

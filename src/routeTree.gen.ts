@@ -9,7 +9,9 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WelcomeRouteImport } from './routes/welcome'
 import { Route as TherapistPortalRouteImport } from './routes/therapist-portal'
+import { Route as TherapistRouteImport } from './routes/therapist'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as SigninRouteImport } from './routes/signin'
 import { Route as SettingsRouteImport } from './routes/settings'
@@ -23,6 +25,7 @@ import { Route as JournalRouteImport } from './routes/journal'
 import { Route as GiftRouteImport } from './routes/gift'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as ClientRouteImport } from './routes/client'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as TherapistsIndexRouteImport } from './routes/therapists.index'
@@ -33,9 +36,19 @@ import { Route as PartnersClinicalRouteImport } from './routes/partners.clinical
 import { Route as BookingIdRouteImport } from './routes/booking.$id'
 import { Route as ApiCompanionChatRouteImport } from './routes/api/companion-chat'
 
+const WelcomeRoute = WelcomeRouteImport.update({
+  id: '/welcome',
+  path: '/welcome',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TherapistPortalRoute = TherapistPortalRouteImport.update({
   id: '/therapist-portal',
   path: '/therapist-portal',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TherapistRoute = TherapistRouteImport.update({
+  id: '/therapist',
+  path: '/therapist',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SignupRoute = SignupRouteImport.update({
@@ -103,6 +116,11 @@ const DashboardRoute = DashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ClientRoute = ClientRouteImport.update({
+  id: '/client',
+  path: '/client',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
@@ -152,6 +170,7 @@ const ApiCompanionChatRoute = ApiCompanionChatRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/client': typeof ClientRoute
   '/dashboard': typeof DashboardRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/gift': typeof GiftRoute
@@ -165,7 +184,9 @@ export interface FileRoutesByFullPath {
   '/settings': typeof SettingsRoute
   '/signin': typeof SigninRoute
   '/signup': typeof SignupRoute
+  '/therapist': typeof TherapistRoute
   '/therapist-portal': typeof TherapistPortalRoute
+  '/welcome': typeof WelcomeRoute
   '/api/companion-chat': typeof ApiCompanionChatRoute
   '/booking/$id': typeof BookingIdRoute
   '/partners/clinical': typeof PartnersClinicalRoute
@@ -177,6 +198,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/client': typeof ClientRoute
   '/dashboard': typeof DashboardRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/gift': typeof GiftRoute
@@ -190,7 +212,9 @@ export interface FileRoutesByTo {
   '/settings': typeof SettingsRoute
   '/signin': typeof SigninRoute
   '/signup': typeof SignupRoute
+  '/therapist': typeof TherapistRoute
   '/therapist-portal': typeof TherapistPortalRoute
+  '/welcome': typeof WelcomeRoute
   '/api/companion-chat': typeof ApiCompanionChatRoute
   '/booking/$id': typeof BookingIdRoute
   '/partners/clinical': typeof PartnersClinicalRoute
@@ -203,6 +227,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/client': typeof ClientRoute
   '/dashboard': typeof DashboardRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/gift': typeof GiftRoute
@@ -216,7 +241,9 @@ export interface FileRoutesById {
   '/settings': typeof SettingsRoute
   '/signin': typeof SigninRoute
   '/signup': typeof SignupRoute
+  '/therapist': typeof TherapistRoute
   '/therapist-portal': typeof TherapistPortalRoute
+  '/welcome': typeof WelcomeRoute
   '/api/companion-chat': typeof ApiCompanionChatRoute
   '/booking/$id': typeof BookingIdRoute
   '/partners/clinical': typeof PartnersClinicalRoute
@@ -230,6 +257,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/client'
     | '/dashboard'
     | '/forgot-password'
     | '/gift'
@@ -243,7 +271,9 @@ export interface FileRouteTypes {
     | '/settings'
     | '/signin'
     | '/signup'
+    | '/therapist'
     | '/therapist-portal'
+    | '/welcome'
     | '/api/companion-chat'
     | '/booking/$id'
     | '/partners/clinical'
@@ -255,6 +285,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
+    | '/client'
     | '/dashboard'
     | '/forgot-password'
     | '/gift'
@@ -268,7 +299,9 @@ export interface FileRouteTypes {
     | '/settings'
     | '/signin'
     | '/signup'
+    | '/therapist'
     | '/therapist-portal'
+    | '/welcome'
     | '/api/companion-chat'
     | '/booking/$id'
     | '/partners/clinical'
@@ -280,6 +313,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/auth'
+    | '/client'
     | '/dashboard'
     | '/forgot-password'
     | '/gift'
@@ -293,7 +327,9 @@ export interface FileRouteTypes {
     | '/settings'
     | '/signin'
     | '/signup'
+    | '/therapist'
     | '/therapist-portal'
+    | '/welcome'
     | '/api/companion-chat'
     | '/booking/$id'
     | '/partners/clinical'
@@ -306,6 +342,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthRoute: typeof AuthRoute
+  ClientRoute: typeof ClientRoute
   DashboardRoute: typeof DashboardRoute
   ForgotPasswordRoute: typeof ForgotPasswordRoute
   GiftRoute: typeof GiftRoute
@@ -319,7 +356,9 @@ export interface RootRouteChildren {
   SettingsRoute: typeof SettingsRoute
   SigninRoute: typeof SigninRoute
   SignupRoute: typeof SignupRoute
+  TherapistRoute: typeof TherapistRoute
   TherapistPortalRoute: typeof TherapistPortalRoute
+  WelcomeRoute: typeof WelcomeRoute
   ApiCompanionChatRoute: typeof ApiCompanionChatRoute
   BookingIdRoute: typeof BookingIdRoute
   TherapistsIdRoute: typeof TherapistsIdRoute
@@ -328,11 +367,25 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/welcome': {
+      id: '/welcome'
+      path: '/welcome'
+      fullPath: '/welcome'
+      preLoaderRoute: typeof WelcomeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/therapist-portal': {
       id: '/therapist-portal'
       path: '/therapist-portal'
       fullPath: '/therapist-portal'
       preLoaderRoute: typeof TherapistPortalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/therapist': {
+      id: '/therapist'
+      path: '/therapist'
+      fullPath: '/therapist'
+      preLoaderRoute: typeof TherapistRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/signup': {
@@ -426,6 +479,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/client': {
+      id: '/client'
+      path: '/client'
+      fullPath: '/client'
+      preLoaderRoute: typeof ClientRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/auth': {
       id: '/auth'
       path: '/auth'
@@ -511,6 +571,7 @@ const PartnersRouteWithChildren = PartnersRoute._addFileChildren(
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRoute: AuthRoute,
+  ClientRoute: ClientRoute,
   DashboardRoute: DashboardRoute,
   ForgotPasswordRoute: ForgotPasswordRoute,
   GiftRoute: GiftRoute,
@@ -524,7 +585,9 @@ const rootRouteChildren: RootRouteChildren = {
   SettingsRoute: SettingsRoute,
   SigninRoute: SigninRoute,
   SignupRoute: SignupRoute,
+  TherapistRoute: TherapistRoute,
   TherapistPortalRoute: TherapistPortalRoute,
+  WelcomeRoute: WelcomeRoute,
   ApiCompanionChatRoute: ApiCompanionChatRoute,
   BookingIdRoute: BookingIdRoute,
   TherapistsIdRoute: TherapistsIdRoute,
