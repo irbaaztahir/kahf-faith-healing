@@ -1,11 +1,13 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, Navigate } from "@tanstack/react-router";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { therapists, moodScale } from "@/data/kahf";
+import { moodScale } from "@/data/kahf";
 import { MessageCircle, NotebookPen, Calendar, Compass, Settings as SettingsIcon } from "lucide-react";
 import heroPattern from "@/assets/hero-pattern.jpg";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useAuth } from "@/hooks/use-auth";
+import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/dashboard")({
   head: () => ({ meta: [{ title: "Your space — Kahf" }] }),
@@ -14,7 +16,35 @@ export const Route = createFileRoute("/dashboard")({
 
 function Dashboard() {
   const [mood, setMood] = useState<number | null>(null);
-  const upcoming = therapists[0];
+  const { user, loading } = useAuth();
+  const [displayName, setDisplayName] = useState<string>("");
+  const [profileLoading, setProfileLoading] = useState(true);
+
+  useEffect(() => {
+    if (!user) {
+      setProfileLoading(false);
+      return;
+    }
+    let cancelled = false;
+    (async () => {
+      const { data } = await supabase
+        .from("profiles")
+        .select("display_name")
+        .eq("id", user.id)
+        .maybeSingle();
+      if (cancelled) return;
+      setDisplayName(data?.display_name?.trim() ?? "");
+      setProfileLoading(false);
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [user]);
+
+  if (loading) return null;
+  if (!user) return <Navigate to="/signin" />;
+
+  const firstName = displayName ? displayName.split(" ")[0] : "";
 
   return (
     <div className="min-h-screen bg-background">
@@ -25,9 +55,21 @@ function Dashboard() {
         <div className="mx-auto max-w-6xl px-6 py-16">
           <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">Assalāmu ʿalaykum</p>
           <h1 className="mt-3 font-display text-5xl leading-tight text-foreground">
-            A gentle <span className="italic">welcome back</span>, Maryam.
+            A gentle <span className="italic">welcome{firstName ? " back" : ""}</span>
+            {firstName ? `, ${firstName}.` : "."}
           </h1>
-          <p className="mt-2 text-muted-foreground">However today feels — there's space for it here.</p>
+          <p className="mt-2 text-muted-foreground">
+            {profileLoading
+              ? "Loading your space…"
+              : firstName
+                ? "However today feels — there's space for it here."
+                : (
+                  <>
+                    Add your name in{" "}
+                    <Link to="/settings" className="underline">settings</Link> to personalize your space.
+                  </>
+                )}
+          </p>
         </div>
       </section>
 
@@ -54,16 +96,10 @@ function Dashboard() {
         <Card className="rounded-2xl border-border/60 bg-dusk text-mist shadow-soft">
           <CardContent className="p-6">
             <p className="text-xs uppercase tracking-[0.2em] text-mist/70">Upcoming</p>
-            <h2 className="mt-2 font-display text-2xl">Tomorrow · 10:00</h2>
-            <div className="mt-4 flex items-center gap-3">
-              <img src={upcoming.photo} alt="" className="h-12 w-12 rounded-xl object-cover" />
-              <div className="text-sm">
-                <p>{upcoming.name}</p>
-                <p className="text-mist/70">50-min session</p>
-              </div>
-            </div>
+            <h2 className="mt-2 font-display text-2xl">No sessions scheduled</h2>
+            <p className="mt-2 text-sm text-mist/70">When you book a session, it'll show up here.</p>
             <Button asChild className="mt-6 w-full rounded-full bg-mist text-dusk hover:bg-mist/90">
-              <Link to="/session">Enter waiting room</Link>
+              <Link to="/therapists">Browse therapists</Link>
             </Button>
           </CardContent>
         </Card>
@@ -74,31 +110,15 @@ function Dashboard() {
               <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Recent journal</p>
               <Link to="/journal" className="text-xs text-dusk">Open journal →</Link>
             </div>
-            <div className="mt-4 space-y-3">
-              {[
-                { d: "Mon", t: "Felt the dua I made on Sunday begin to settle…" },
-                { d: "Sat", t: "A heavy day. Sat with it instead of fixing it." },
-              ].map((e) => (
-                <div key={e.d} className="flex gap-4 rounded-xl border border-border bg-background p-4">
-                  <span className="font-display text-2xl text-accent">{e.d}</span>
-                  <p className="text-sm leading-relaxed text-foreground">{e.t}</p>
-                </div>
-              ))}
-            </div>
+            <p className="mt-4 text-sm text-muted-foreground">Your journal entries will appear here.</p>
           </CardContent>
         </Card>
 
         <Card className="rounded-2xl border-border/60 bg-card shadow-soft">
           <CardContent className="p-6">
             <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Messages</p>
-            <div className="mt-4 flex items-start gap-3">
-              <img src={upcoming.photo} alt="" className="h-10 w-10 rounded-xl object-cover" />
-              <div className="text-sm">
-                <p className="font-medium text-foreground">{upcoming.name}</p>
-                <p className="line-clamp-2 text-muted-foreground">Looking forward to our session tomorrow…</p>
-              </div>
-            </div>
-            <Button variant="outline" className="mt-5 w-full rounded-full border-border">
+            <p className="mt-4 text-sm text-muted-foreground">No messages yet.</p>
+            <Button variant="outline" className="mt-5 w-full rounded-full border-border" disabled>
               <MessageCircle className="mr-2 h-4 w-4" /> Open thread
             </Button>
           </CardContent>

@@ -1,12 +1,15 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Navigate } from "@tanstack/react-router";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { therapists } from "@/data/kahf";
 import { ShieldCheck, DollarSign, Calendar, Users } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useAuth } from "@/hooks/use-auth";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/therapist-portal")({
   head: () => ({ meta: [{ title: "Therapist portal — Kahf" }] }),
@@ -14,7 +17,51 @@ export const Route = createFileRoute("/therapist-portal")({
 });
 
 function TherapistPortal() {
-  const me = therapists[0];
+  const { user, loading: authLoading } = useAuth();
+  const [displayName, setDisplayName] = useState("");
+  const [bio, setBio] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    if (!user) {
+      setLoading(false);
+      return;
+    }
+    let cancelled = false;
+    (async () => {
+      const { data } = await supabase
+        .from("profiles")
+        .select("display_name, bio")
+        .eq("id", user.id)
+        .maybeSingle();
+      if (cancelled) return;
+      setDisplayName(data?.display_name ?? "");
+      setBio(data?.bio ?? "");
+      setLoading(false);
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [user]);
+
+  if (authLoading) return null;
+  if (!user) return <Navigate to="/signin" />;
+
+  const firstName = displayName ? displayName.split(" ")[0] : "";
+
+  const handleSave = async () => {
+    setSaving(true);
+    const { error } = await supabase
+      .from("profiles")
+      .upsert(
+        { id: user.id, display_name: displayName.trim() || null, bio: bio.trim() || null },
+        { onConflict: "id" },
+      );
+    setSaving(false);
+    if (error) toast.error(error.message);
+    else toast.success("Profile saved");
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -23,7 +70,9 @@ function TherapistPortal() {
         <div className="flex items-start justify-between gap-6">
           <div>
             <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">Therapist portal</p>
-            <h1 className="mt-3 font-display text-5xl leading-tight text-foreground">Welcome, <span className="italic">{me.name.split(" ")[1] ?? me.name}</span></h1>
+            <h1 className="mt-3 font-display text-5xl leading-tight text-foreground">
+              Welcome{firstName ? <>, <span className="italic">{firstName}</span></> : null}
+            </h1>
           </div>
           <Badge className="rounded-full bg-secondary px-4 py-2 text-xs text-secondary-foreground">
             <ShieldCheck className="mr-1.5 h-3.5 w-3.5" /> Verified
@@ -31,31 +80,17 @@ function TherapistPortal() {
         </div>
 
         <div className="mt-10 grid gap-4 sm:grid-cols-4">
-          <Stat icon={Calendar} label="This week" value="12" />
-          <Stat icon={Users} label="Active patients" value="38" />
-          <Stat icon={DollarSign} label="This month" value="$4,290" />
-          <Stat icon={ShieldCheck} label="Rating" value={`${me.rating} ★`} />
+          <Stat icon={Calendar} label="This week" value="—" />
+          <Stat icon={Users} label="Active patients" value="—" />
+          <Stat icon={DollarSign} label="This month" value="—" />
+          <Stat icon={ShieldCheck} label="Rating" value="—" />
         </div>
 
         <div className="mt-10 grid gap-6 lg:grid-cols-3">
           <Card className="rounded-2xl border-border/60 bg-card shadow-soft lg:col-span-2">
             <CardContent className="p-6">
               <h2 className="font-display text-2xl text-foreground">Upcoming sessions</h2>
-              <div className="mt-6 space-y-3">
-                {[
-                  { name: "Maryam K.", time: "Today · 16:00", type: "Session" },
-                  { name: "Yusuf A.", time: "Tomorrow · 10:00", type: "Consult" },
-                  { name: "Aisha M.", time: "Thu · 18:30", type: "Session" },
-                ].map((s) => (
-                  <div key={s.name} className="flex items-center justify-between rounded-xl border border-border bg-background p-4">
-                    <div>
-                      <p className="font-medium text-foreground">{s.name}</p>
-                      <p className="text-xs text-muted-foreground">{s.time} · {s.type}</p>
-                    </div>
-                    <Button size="sm" variant="outline" className="rounded-full">Open</Button>
-                  </div>
-                ))}
-              </div>
+              <p className="mt-4 text-sm text-muted-foreground">No upcoming sessions yet.</p>
             </CardContent>
           </Card>
 
@@ -76,16 +111,22 @@ function TherapistPortal() {
             <CardContent className="p-6">
               <h2 className="font-display text-2xl text-foreground">Profile editor</h2>
               <div className="mt-6 grid gap-5 md:grid-cols-2">
-                <Field label="Display name" defaultValue={me.name} />
-                <Field label="Credentials" defaultValue={me.credentials} />
-                <Field label="Languages" defaultValue={me.languages.join(", ")} />
-                <Field label="Session price (USD)" defaultValue={String(me.price)} />
+                <div>
+                  <label className="mb-2 block text-xs uppercase tracking-[0.2em] text-muted-foreground">Display name</label>
+                  <Input value={displayName} onChange={(e) => setDisplayName(e.target.value)} placeholder="Your name" disabled={loading} className="h-11 rounded-xl border-border bg-background" />
+                </div>
+                <div>
+                  <label className="mb-2 block text-xs uppercase tracking-[0.2em] text-muted-foreground">Email</label>
+                  <Input value={user.email ?? ""} disabled className="h-11 rounded-xl border-border bg-background" />
+                </div>
                 <div className="md:col-span-2">
                   <label className="mb-2 block text-xs uppercase tracking-[0.2em] text-muted-foreground">About</label>
-                  <Textarea defaultValue={me.bio} className="min-h-[120px] rounded-2xl border-border bg-background" />
+                  <Textarea value={bio} onChange={(e) => setBio(e.target.value)} placeholder="Tell clients about your approach…" disabled={loading} className="min-h-[120px] rounded-2xl border-border bg-background" />
                 </div>
               </div>
-              <Button className="mt-6 rounded-full bg-dusk text-mist hover:bg-dusk/90">Save changes</Button>
+              <Button onClick={handleSave} disabled={saving || loading} className="mt-6 rounded-full bg-dusk text-mist hover:bg-dusk/90">
+                {saving ? "Saving…" : "Save changes"}
+              </Button>
             </CardContent>
           </Card>
         </div>
@@ -106,11 +147,3 @@ function Stat({ icon: Icon, label, value }: { icon: typeof Calendar; label: stri
   );
 }
 
-function Field({ label, defaultValue }: { label: string; defaultValue: string }) {
-  return (
-    <div>
-      <label className="mb-2 block text-xs uppercase tracking-[0.2em] text-muted-foreground">{label}</label>
-      <Input defaultValue={defaultValue} className="h-11 rounded-xl border-border bg-background" />
-    </div>
-  );
-}
