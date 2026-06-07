@@ -134,6 +134,13 @@ function SignupPage() {
       );
       if (error) throw error;
 
+      // Supabase returns a user with an empty `identities` array when the email
+      // is already registered (anti-enumeration). Detect and tell the user.
+      const identities = (data.user as { identities?: unknown[] } | null)?.identities;
+      if (data.user && Array.isArray(identities) && identities.length === 0) {
+        throw new Error("An account with this email already exists. Please sign in instead.");
+      }
+
       let activeSession = data.session;
       if (!activeSession && data.user) {
         setStatusMessage("Account created. Signing you in…");
