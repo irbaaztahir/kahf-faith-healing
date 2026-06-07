@@ -14,6 +14,57 @@ export type Database = {
   }
   public: {
     Tables: {
+      journal_entries: {
+        Row: {
+          created_at: string
+          entry: string
+          id: string
+          mood: number | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          entry?: string
+          id?: string
+          mood?: number | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          entry?: string
+          id?: string
+          mood?: number | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      mood_checkins: {
+        Row: {
+          created_at: string
+          id: string
+          mood: number
+          note: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          mood: number
+          note?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          mood?: number
+          note?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
@@ -53,6 +104,51 @@ export type Database = {
           specializations?: string[] | null
           updated_at?: string
           years_experience?: number | null
+        }
+        Relationships: []
+      }
+      sessions: {
+        Row: {
+          client_id: string
+          created_at: string
+          duration_minutes: number
+          id: string
+          kind: string
+          note: string | null
+          price: number | null
+          scheduled_at: string
+          status: string
+          therapist_id: string | null
+          therapist_name: string | null
+          updated_at: string
+        }
+        Insert: {
+          client_id: string
+          created_at?: string
+          duration_minutes?: number
+          id?: string
+          kind?: string
+          note?: string | null
+          price?: number | null
+          scheduled_at: string
+          status?: string
+          therapist_id?: string | null
+          therapist_name?: string | null
+          updated_at?: string
+        }
+        Update: {
+          client_id?: string
+          created_at?: string
+          duration_minutes?: number
+          id?: string
+          kind?: string
+          note?: string | null
+          price?: number | null
+          scheduled_at?: string
+          status?: string
+          therapist_id?: string | null
+          therapist_name?: string | null
+          updated_at?: string
         }
         Relationships: []
       }
