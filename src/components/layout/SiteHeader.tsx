@@ -96,13 +96,17 @@ export function SiteHeader() {
           </div>
         </nav>
         <div className="hidden items-center gap-2 md:flex">
-          <Button asChild variant="outline" size="sm" className="kahf-btn h-10 rounded-[10px] border-lavender bg-transparent px-5 text-dusk hover:bg-lavender/15">
-            <Link to="/signin">Sign in</Link>
-          </Button>
+          {!authLoading && !signedIn && (
+            <Button asChild variant="outline" size="sm" className="kahf-btn h-10 rounded-[10px] border-lavender bg-transparent px-5 text-dusk hover:bg-lavender/15">
+              <Link to="/signin">Sign in</Link>
+            </Button>
+          )}
           <Button asChild size="sm" className="kahf-btn h-10 rounded-[10px] bg-gold px-5 text-dusk hover:bg-gold/90">
             <Link to="/quiz">Find your therapist</Link>
           </Button>
+          {signedIn && <UserMenu />}
         </div>
+
         <button
           className="kahf-btn flex h-10 w-10 items-center justify-center rounded-[10px] text-dusk md:hidden"
           onClick={() => setOpen((v) => !v)}
