@@ -181,13 +181,6 @@ function SignupPage() {
         className="w-full max-w-[480px] rounded-[20px] bg-warm p-10 kahf-modal-content"
         style={{ border: "1px solid rgba(201,192,224,0.35)", boxShadow: "0 20px 60px rgba(58,47,82,0.1)" }}
       >
-        <button
-          type="button"
-          onClick={() => navigate({ to: "/welcome" })}
-          className="mb-4 inline-flex items-center gap-1 text-[12px] text-cool transition-colors hover:text-dusk"
-        >
-          <ArrowLeft className="h-3.5 w-3.5" /> Change role
-        </button>
         <div className="flex flex-col items-center text-center">
           <KahfLogo className="h-12 w-auto" />
           <h2 className="mt-5 font-display text-3xl text-dusk">Create your sanctuary</h2>
@@ -230,16 +223,13 @@ function SignupPage() {
           )}
 
           <Button disabled={loading} type="submit" className="kahf-btn mt-3 h-12 w-full rounded-[12px] bg-gold text-[15px] font-medium text-dusk hover:bg-gold/90">
-            {loading ? "Creating account…" : isTherapist ? "Create Therapist Account" : "Create My Account"}
+            {loading ? "Creating account…" : "Create My Account"}
           </Button>
         </form>
 
-        {!isTherapist && (
-          <>
-            <Divider />
-            <SocialButtons />
-          </>
-        )}
+        <Divider />
+        <SocialButtons />
+
 
         <p className="mt-7 text-center text-[13px] text-cool">
           Already have an account? <Link to="/signin" className="text-dusk underline">Sign in</Link>
