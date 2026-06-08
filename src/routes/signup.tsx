@@ -190,14 +190,8 @@ function SignupPage() {
         </button>
         <div className="flex flex-col items-center text-center">
           <KahfLogo className="h-12 w-auto" />
-          <h2 className="mt-5 font-display text-3xl text-dusk">
-            {isTherapist ? "Join as a Therapist" : "Create your sanctuary"}
-          </h2>
-          <p className="mt-2 text-[13px] text-cool">
-            {isTherapist
-              ? "Tell us a little about your practice."
-              : "Your healing journey begins here. Completely private."}
-          </p>
+          <h2 className="mt-5 font-display text-3xl text-dusk">Create your sanctuary</h2>
+          <p className="mt-2 text-[13px] text-cool">Your healing journey begins here. Completely private.</p>
         </div>
 
         <form className="mt-8 space-y-4" onSubmit={handleSubmit}>
@@ -214,23 +208,10 @@ function SignupPage() {
             <PasswordField value={confirm} onChange={setConfirm} show={show2} onToggle={() => setShow2(!show2)} placeholder="Confirm your password" />
           </FieldLabel>
 
-          {isTherapist ? (
-            <>
-              <FieldLabel label="Professional license or qualification">
-                <Input required value={license} onChange={(e) => setLicense(e.target.value)} placeholder="e.g. LCSW #12345, PhD Clinical Psych" className="h-12 rounded-[10px] border-lavender bg-warm" />
-              </FieldLabel>
-              <FieldLabel label="Years of experience">
-                <Input required type="number" min={0} value={yearsExperience} onChange={(e) => setYearsExperience(e.target.value)} placeholder="e.g. 5" className="h-12 rounded-[10px] border-lavender bg-warm" />
-              </FieldLabel>
-              <FieldLabel label="Specializations (comma separated)">
-                <Input required value={specializations} onChange={(e) => setSpecializations(e.target.value)} placeholder="Anxiety, Marriage, Trauma" className="h-12 rounded-[10px] border-lavender bg-warm" />
-              </FieldLabel>
-            </>
-          ) : (
-            <FieldLabel label="What are you looking for help with? (optional)">
-              <Textarea value={lookingFor} onChange={(e) => setLookingFor(e.target.value)} placeholder="Share as much or as little as you'd like…" className="min-h-[88px] rounded-[10px] border-lavender bg-warm" />
-            </FieldLabel>
-          )}
+          <FieldLabel label="What are you looking for help with? (optional)">
+            <Textarea value={lookingFor} onChange={(e) => setLookingFor(e.target.value)} placeholder="Share as much or as little as you'd like…" className="min-h-[88px] rounded-[10px] border-lavender bg-warm" />
+          </FieldLabel>
+
 
           <label className="flex items-start gap-2 pt-2 text-[12px] text-cool">
             <input type="checkbox" required className="mt-0.5 h-4 w-4 accent-lavender" />
