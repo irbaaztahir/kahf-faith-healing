@@ -28,23 +28,8 @@ async function withTimeout<T>(promise: Promise<T>, message: string, timeoutMs = 
   }
 }
 
-function readInitialRole(): SignupRole | null {
-  if (typeof window === "undefined") return null;
-  const params = new URLSearchParams(window.location.search);
-  const fromUrl = params.get("role");
-  if (fromUrl === "client" || fromUrl === "therapist") return fromUrl;
-  try {
-    const stored = sessionStorage.getItem("kahf:signup-role");
-    if (stored === "client" || stored === "therapist") return stored;
-  } catch {
-    /* ignore */
-  }
-  return null;
-}
-
 function SignupPage() {
   const navigate = useNavigate();
-  const [role, setRole] = useState<SignupRole | null>(null);
   const [show1, setShow1] = useState(false);
   const [show2, setShow2] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -56,25 +41,23 @@ function SignupPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
-  // client extras
   const [lookingFor, setLookingFor] = useState("");
-  // therapist extras
-  const [license, setLicense] = useState("");
-  const [yearsExperience, setYearsExperience] = useState("");
-  const [specializations, setSpecializations] = useState("");
 
   useEffect(() => {
-    const r = readInitialRole();
-    if (!r) {
-      navigate({ to: "/welcome", replace: true });
-      return;
+    try {
+      sessionStorage.setItem("kahf:signup-role", "client");
+    } catch {
+      /* ignore */
     }
-    setRole(r);
-  }, [navigate]);
+  }, []);
 
-  if (!role) return null;
+  const role: SignupRole = "client";
+  const isTherapist = false;
+  // legacy therapist-only fields, kept as no-ops to preserve submit shape
+  const license = "";
+  const yearsExperience = "";
+  const specializations = "";
 
-  const isTherapist = role === "therapist";
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
