@@ -1,4 +1,4 @@
-import { createFileRoute, Navigate, notFound, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { Button } from "@/components/ui/button";
@@ -6,9 +6,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { therapists } from "@/data/kahf";
 import { Check, CalendarPlus, Bell } from "lucide-react";
-import { useAuth } from "@/hooks/use-auth";
-import { supabase } from "@/integrations/supabase/client";
-import { toast } from "sonner";
 
 type Search = { kind?: "consult" | "session" };
 
@@ -30,42 +27,12 @@ export const Route = createFileRoute("/booking/$id")({
 function BookingPage() {
   const { therapist } = Route.useLoaderData() as { therapist: typeof therapists[number] };
   const { kind } = Route.useSearch();
-  const { user, loading: authLoading } = useAuth();
   const [step, setStep] = useState(0);
   const [slot, setSlot] = useState<string | null>(null);
   const [note, setNote] = useState("");
-  const [saving, setSaving] = useState(false);
   const navigate = useNavigate();
 
   const slots = ["10:00", "11:30", "14:00", "16:30", "18:00", "20:00"];
-
-  if (authLoading) return null;
-  if (!user) return <Navigate to="/signin" replace />;
-
-  const confirmBooking = async () => {
-    if (!slot) return;
-    setSaving(true);
-    const [hh, mm] = slot.split(":").map(Number);
-    const when = new Date();
-    when.setDate(when.getDate() + 1);
-    when.setHours(hh, mm, 0, 0);
-    const { error } = await supabase.from("sessions").insert({
-      client_id: user.id,
-      therapist_name: therapist.name,
-      kind: kind === "consult" ? "consult" : "session",
-      scheduled_at: when.toISOString(),
-      duration_minutes: kind === "consult" ? 15 : 50,
-      price: kind === "consult" ? 0 : therapist.price,
-      note: note.trim() || null,
-      status: "confirmed",
-    });
-    setSaving(false);
-    if (error) {
-      toast.error(error.message);
-      return;
-    }
-    setStep(3);
-  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -149,8 +116,8 @@ function BookingPage() {
                   Payment is processed securely via Stripe. You won't be charged until the session is confirmed.
                 </div>
               )}
-              <Button onClick={confirmBooking} disabled={saving} className="mt-8 h-12 w-full rounded-full bg-dusk text-mist hover:bg-dusk/90">
-                {saving ? "Confirming…" : kind === "consult" ? "Confirm booking" : `Pay $${therapist.price} & confirm`}
+              <Button onClick={() => setStep(3)} className="mt-8 h-12 w-full rounded-full bg-dusk text-mist hover:bg-dusk/90">
+                {kind === "consult" ? "Confirm booking" : `Pay $${therapist.price} & confirm`}
               </Button>
             </CardContent>
           </Card>
