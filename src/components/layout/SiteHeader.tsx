@@ -131,9 +131,28 @@ export function SiteHeader() {
               Corporate Program
             </Link>
             <div className="mt-2 flex gap-2">
-              <Button asChild variant="outline" className="flex-1 rounded-[10px] border-lavender"><Link to="/signin" onClick={() => setOpen(false)}>Sign in</Link></Button>
+              {!authLoading && !signedIn && (
+                <Button asChild variant="outline" className="flex-1 rounded-[10px] border-lavender"><Link to="/signin" onClick={() => setOpen(false)}>Sign in</Link></Button>
+              )}
               <Button asChild className="kahf-btn flex-1 rounded-[10px] bg-gold text-dusk hover:bg-gold/90"><Link to="/quiz" onClick={() => setOpen(false)}>Find your therapist</Link></Button>
             </div>
+            {signedIn && (
+              <div className="mt-2 flex gap-2">
+                <Button asChild variant="outline" className="flex-1 rounded-[10px] border-lavender"><Link to="/profile" onClick={() => setOpen(false)}>My profile</Link></Button>
+                <Button
+                  variant="ghost"
+                  className="flex-1 rounded-[10px] text-destructive hover:bg-destructive/10 hover:text-destructive"
+                  onClick={async () => {
+                    setOpen(false);
+                    const { supabase } = await import("@/integrations/supabase/client");
+                    await supabase.auth.signOut();
+                  }}
+                >
+                  Sign out
+                </Button>
+              </div>
+            )}
+
           </div>
         </div>
       )}
