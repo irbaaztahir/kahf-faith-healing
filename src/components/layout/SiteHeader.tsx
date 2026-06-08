@@ -3,6 +3,9 @@ import { KahfWordmark } from "@/components/brand/KahfLogo";
 import { Button } from "@/components/ui/button";
 import { useState, useRef } from "react";
 import { Menu, X, Stethoscope, Building2, ChevronDown } from "lucide-react";
+import { useAuth } from "@/hooks/use-auth";
+import { UserMenu } from "@/components/layout/UserMenu";
+
 
 const nav = [
   { to: "/therapists", label: "Therapists" },
@@ -17,6 +20,9 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const [partnerOpen, setPartnerOpen] = useState(false);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const { user, loading: authLoading } = useAuth();
+  const signedIn = !!user;
+
 
   const handleEnter = () => {
     if (closeTimer.current) clearTimeout(closeTimer.current);
@@ -90,13 +96,17 @@ export function SiteHeader() {
           </div>
         </nav>
         <div className="hidden items-center gap-2 md:flex">
-          <Button asChild variant="outline" size="sm" className="kahf-btn h-10 rounded-[10px] border-lavender bg-transparent px-5 text-dusk hover:bg-lavender/15">
-            <Link to="/signin">Sign in</Link>
-          </Button>
+          {!authLoading && !signedIn && (
+            <Button asChild variant="outline" size="sm" className="kahf-btn h-10 rounded-[10px] border-lavender bg-transparent px-5 text-dusk hover:bg-lavender/15">
+              <Link to="/signin">Sign in</Link>
+            </Button>
+          )}
           <Button asChild size="sm" className="kahf-btn h-10 rounded-[10px] bg-gold px-5 text-dusk hover:bg-gold/90">
             <Link to="/quiz">Find your therapist</Link>
           </Button>
+          {signedIn && <UserMenu />}
         </div>
+
         <button
           className="kahf-btn flex h-10 w-10 items-center justify-center rounded-[10px] text-dusk md:hidden"
           onClick={() => setOpen((v) => !v)}
@@ -121,9 +131,28 @@ export function SiteHeader() {
               Corporate Program
             </Link>
             <div className="mt-2 flex gap-2">
-              <Button asChild variant="outline" className="flex-1 rounded-[10px] border-lavender"><Link to="/signin" onClick={() => setOpen(false)}>Sign in</Link></Button>
+              {!authLoading && !signedIn && (
+                <Button asChild variant="outline" className="flex-1 rounded-[10px] border-lavender"><Link to="/signin" onClick={() => setOpen(false)}>Sign in</Link></Button>
+              )}
               <Button asChild className="kahf-btn flex-1 rounded-[10px] bg-gold text-dusk hover:bg-gold/90"><Link to="/quiz" onClick={() => setOpen(false)}>Find your therapist</Link></Button>
             </div>
+            {signedIn && (
+              <div className="mt-2 flex gap-2">
+                <Button asChild variant="outline" className="flex-1 rounded-[10px] border-lavender"><Link to="/profile" onClick={() => setOpen(false)}>My profile</Link></Button>
+                <Button
+                  variant="ghost"
+                  className="flex-1 rounded-[10px] text-destructive hover:bg-destructive/10 hover:text-destructive"
+                  onClick={async () => {
+                    setOpen(false);
+                    const { supabase } = await import("@/integrations/supabase/client");
+                    await supabase.auth.signOut();
+                  }}
+                >
+                  Sign out
+                </Button>
+              </div>
+            )}
+
           </div>
         </div>
       )}
