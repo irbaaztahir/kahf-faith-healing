@@ -3,6 +3,9 @@ import { KahfWordmark } from "@/components/brand/KahfLogo";
 import { Button } from "@/components/ui/button";
 import { useState, useRef } from "react";
 import { Menu, X, Stethoscope, Building2, ChevronDown } from "lucide-react";
+import { useAuth } from "@/hooks/use-auth";
+import { UserMenu } from "@/components/layout/UserMenu";
+
 
 const nav = [
   { to: "/therapists", label: "Therapists" },
@@ -17,6 +20,9 @@ export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const [partnerOpen, setPartnerOpen] = useState(false);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const { user, loading: authLoading } = useAuth();
+  const signedIn = !!user;
+
 
   const handleEnter = () => {
     if (closeTimer.current) clearTimeout(closeTimer.current);
