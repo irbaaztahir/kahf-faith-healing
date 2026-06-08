@@ -18,6 +18,7 @@ import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as SessionRouteImport } from './routes/session'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as QuizRouteImport } from './routes/quiz'
+import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as PartnersRouteImport } from './routes/partners'
 import { Route as ParentsHubRouteImport } from './routes/parents-hub'
 import { Route as JourneyRouteImport } from './routes/journey'
@@ -80,6 +81,11 @@ const ResetPasswordRoute = ResetPasswordRouteImport.update({
 const QuizRoute = QuizRouteImport.update({
   id: '/quiz',
   path: '/quiz',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PartnersRoute = PartnersRouteImport.update({
@@ -184,6 +190,7 @@ export interface FileRoutesByFullPath {
   '/journey': typeof JourneyRoute
   '/parents-hub': typeof ParentsHubRoute
   '/partners': typeof PartnersRouteWithChildren
+  '/profile': typeof ProfileRoute
   '/quiz': typeof QuizRoute
   '/reset-password': typeof ResetPasswordRoute
   '/session': typeof SessionRoute
@@ -213,6 +220,7 @@ export interface FileRoutesByTo {
   '/journey': typeof JourneyRoute
   '/parents-hub': typeof ParentsHubRoute
   '/partners': typeof PartnersRouteWithChildren
+  '/profile': typeof ProfileRoute
   '/quiz': typeof QuizRoute
   '/reset-password': typeof ResetPasswordRoute
   '/session': typeof SessionRoute
@@ -243,6 +251,7 @@ export interface FileRoutesById {
   '/journey': typeof JourneyRoute
   '/parents-hub': typeof ParentsHubRoute
   '/partners': typeof PartnersRouteWithChildren
+  '/profile': typeof ProfileRoute
   '/quiz': typeof QuizRoute
   '/reset-password': typeof ResetPasswordRoute
   '/session': typeof SessionRoute
@@ -274,6 +283,7 @@ export interface FileRouteTypes {
     | '/journey'
     | '/parents-hub'
     | '/partners'
+    | '/profile'
     | '/quiz'
     | '/reset-password'
     | '/session'
@@ -303,6 +313,7 @@ export interface FileRouteTypes {
     | '/journey'
     | '/parents-hub'
     | '/partners'
+    | '/profile'
     | '/quiz'
     | '/reset-password'
     | '/session'
@@ -332,6 +343,7 @@ export interface FileRouteTypes {
     | '/journey'
     | '/parents-hub'
     | '/partners'
+    | '/profile'
     | '/quiz'
     | '/reset-password'
     | '/session'
@@ -362,6 +374,7 @@ export interface RootRouteChildren {
   JourneyRoute: typeof JourneyRoute
   ParentsHubRoute: typeof ParentsHubRoute
   PartnersRoute: typeof PartnersRouteWithChildren
+  ProfileRoute: typeof ProfileRoute
   QuizRoute: typeof QuizRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   SessionRoute: typeof SessionRoute
@@ -441,6 +454,13 @@ declare module '@tanstack/react-router' {
       path: '/quiz'
       fullPath: '/quiz'
       preLoaderRoute: typeof QuizRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/partners': {
@@ -599,6 +619,7 @@ const rootRouteChildren: RootRouteChildren = {
   JourneyRoute: JourneyRoute,
   ParentsHubRoute: ParentsHubRoute,
   PartnersRoute: PartnersRouteWithChildren,
+  ProfileRoute: ProfileRoute,
   QuizRoute: QuizRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   SessionRoute: SessionRoute,
